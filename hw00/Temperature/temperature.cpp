@@ -25,7 +25,10 @@ double cpp_ftoc(const char* str)
 
 double c_ctof(const char* str)
 {
-	return 0.0;
+	char* err;
+	double result = strtod(str, &err);
+	cout << *err << endl;
+	return result * (9.0 / 5.0) + 32.0;
 }
 
 
@@ -37,6 +40,10 @@ int main(int argc, char** argv)
 			if (result == -9999) {
 				return 0;
 			}
+			cout << result << endl;
+		}
+		if (argv[2] == string("--ctof")) {
+			double result = c_ctof(argv[3]);
 			cout << result << endl;
 		}
 	}
