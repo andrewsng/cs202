@@ -36,6 +36,13 @@ double c_ctof(const char* str)
 }
 
 
+void printHelp()
+{
+	cout << "Available functions: --ftoc, --ctof\n"
+		<< "ARGUMENT USAGE: <function name> <value>" << endl;
+}
+
+
 int main(int argc, char** argv)
 {
 	if (argc >= 3) {
@@ -54,8 +61,12 @@ int main(int argc, char** argv)
 			cout << result << endl;
 		}
 		else {
-			cout << "ERROR: Argument not found\n"
-				 << "Available functions: --ftoc, --ctof" << endl;
+			cout << "ERROR: Argument not found" << endl;
+			printHelp();
 		}
+	}
+	else {
+		cout << "ERROR: Not enough arguments" << endl;
+		printHelp();
 	}
 }
