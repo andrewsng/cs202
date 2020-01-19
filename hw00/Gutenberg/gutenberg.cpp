@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <random>
 
 
 using std::cout;
@@ -22,9 +23,31 @@ int main()
 	string line;
 	string excerpt;
 	vector<string> excerpts;
-	for (int i = 0; i < 10; ++i) {
+	while (true) {
 		std::getline(fin, line);
-		excerpt += '\n' + line;
+		if (!fin) {
+			if (fin.eof()) {
+				excerpts.push_back(excerpt);
+				break;
+			}
+			else {
+				cout << "ERROR: Could not read line" << endl;
+				return 0;
+			}
+		}
+		if (line.empty()) {
+			if (excerpt.empty()) {
+				continue;
+			}
+			excerpts.push_back(excerpt);
+			excerpt.clear();
+		}
+		else {
+			excerpt = excerpt + '\n' + line;
+		}
 	}
-	cout << excerpt << " TEST END" << endl;
+	for (auto e : excerpts) {
+		cout << e << '\n';
+	}
+	cout << excerpts.size() << " TEST END" << endl;
 }
