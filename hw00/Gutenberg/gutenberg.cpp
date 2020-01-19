@@ -15,6 +15,9 @@ using std::ofstream;
 
 int main()
 {
+	cout << "An excerpt from:\n"
+		<< "A Tale of Two Cities by Charles Dickens" << endl;
+
 	ifstream fin("TaleOfTwoCities.txt");
 	if (!fin) {
 		cout << "ERROR: Book could not be read" << endl;
@@ -46,8 +49,18 @@ int main()
 			excerpt = excerpt + '\n' + line;
 		}
 	}
-	for (auto e : excerpts) {
-		cout << e << '\n';
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(2, 1500);
+	int index;
+	while (true) {
+		index = dist(gen);
+		if (excerpts[index].size() < 300) {
+			continue;
+		}
+		break;
 	}
-	cout << excerpts.size() << " TEST END" << endl;
+	cout << "\nExcerpt chosen: " << index << "/3317\n"
+		<< excerpts[index] << endl;
 }
