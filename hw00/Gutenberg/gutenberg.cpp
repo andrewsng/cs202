@@ -1,7 +1,7 @@
 /*
 Andrew Ng
 gutenberg.cpp
-Jan 19, 2020
+Jan 18, 2020
 Project Gutenberg excerpt
 program for hw00
 */

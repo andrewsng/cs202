@@ -1,7 +1,7 @@
 /*
 Andrew Ng
 temperature.cpp
-Jan 19, 2020
+Jan 18, 2020
 temperature conversion program using 
 command line arguments for hw00
 */
