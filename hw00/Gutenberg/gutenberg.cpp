@@ -1,3 +1,12 @@
+/*
+Andrew Ng
+gutenberg.cpp
+Jan 19, 2020
+Project Gutenberg excerpt
+program for hw00
+*/
+
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -18,11 +27,14 @@ int main()
 	cout << "An excerpt from:\n"
 		<< "A Tale of Two Cities by Charles Dickens" << endl;
 
+	// book txt file input
 	ifstream fin("TaleOfTwoCities.txt");
 	if (!fin) {
 		cout << "ERROR: Book could not be read" << endl;
 		return 0;
 	}
+
+	// loop that separates out paragraphs into vector
 	string line;
 	string excerpt;
 	vector<string> excerpts;
@@ -50,6 +62,7 @@ int main()
 		}
 	}
 
+	// random number generator to pick index of excerpt
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dist(2, 1500);
@@ -61,6 +74,8 @@ int main()
 		}
 		break;
 	}
+
+	// print excerpt and random index
 	cout << "\nExcerpt chosen: " << index << "/3317\n"
 		<< excerpts[index] << endl;
 }
