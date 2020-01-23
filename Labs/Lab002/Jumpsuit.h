@@ -28,17 +28,13 @@ public:
 
 	~Jumpsuit()
 	{
-		std::cout << "Jumpsuit destroyed\n";
+		std::cout << color_ << " jumpsuit destroyed\n";
 	};
 
 
 	std::string getColor() const;
 
-	void setJumpsuit(Jumpsuit suit);
-
 	void setColor(const std::string& newColor);
-
-	void clear();
 
 
 private:

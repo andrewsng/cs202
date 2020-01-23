@@ -3,9 +3,18 @@
 #include "Jumpsuit.h"
 
 
-void clearColor(Jumpsuit& j)
+Jumpsuit changeColor(Jumpsuit suit)
 {
-	j.clear();
+	std::string newColor = suit.getColor() + "-green";
+	Jumpsuit result(newColor);
+	return result;
+}
+
+
+Jumpsuit clearColor()
+{
+	Jumpsuit blank;
+	return blank;
 }
 
 
@@ -19,17 +28,29 @@ int main()
 {
 	Jumpsuit suit1;
 	Jumpsuit suitCopy(suit1);
-	Jumpsuit blueSuit("blue");
-	std::cout << "\n";
-
-	suitCopy.setJumpsuit(blueSuit);
+	Jumpsuit suit2("blue");
 	std::cout << "\n";
 
 	printColor(suit1);
 	printColor(suitCopy);
-	printColor(blueSuit);
+	printColor(suit2);
+	std::cout << "\n";
+
+	suit2 = changeColor(suit2);
+	std::cout << "\n";
+
+	printColor(suit2);
+	std::cout << "\n";
+
+	suit2 = clearColor();
+	std::cout << "\n";
+
+	printColor(suit2);
 	std::cout << "\n";
 
 	std::vector<Jumpsuit> suits(5);
+	for (auto& j : suits) {
+		j.setColor("green");
+	}
 	std::cout << "\n";
 }
