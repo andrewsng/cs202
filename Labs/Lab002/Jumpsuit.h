@@ -1,3 +1,11 @@
+/*
+Jumpsuit.h
+Andrew Ng
+Jan 23, 2020
+Jumpsuit class declaration
+*/
+
+
 #pragma once
 
 #ifndef JUMPSUIT_H

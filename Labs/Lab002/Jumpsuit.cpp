@@ -1,3 +1,11 @@
+/*
+Jumpsuit.cpp
+Andrew Ng
+Jan 23, 2020
+functions for Jumpsuit class
+*/
+
+
 #include "Jumpsuit.h"
 
 
