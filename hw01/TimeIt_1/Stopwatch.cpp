@@ -23,11 +23,17 @@ void Stopwatch::stop()
 
 void Stopwatch::reportSec()
 {
-
+	auto time = end_ - start_;
+	std::cout << "Time in (s): "
+		<< duration<double>(time).count() 
+		<< std::endl;
 }
 
 
 void Stopwatch::reportMilli()
 {
-
+	auto time = end_ - start_;
+	std::cout << "Time in (ms): "
+		<< duration<double, std::milli>(time).count() 
+		<< std::endl;
 }

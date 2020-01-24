@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Stopwatch.cpp" />
+    <ClCompile Include="TimeIt_1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stopwatch.h" />
