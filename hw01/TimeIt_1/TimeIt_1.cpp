@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <numeric>
 #include <random>
 #include <cmath>
 #include "Stopwatch.h"
@@ -13,7 +14,7 @@ using std::vector;
 
 int main()
 {
-	for (int i = 1; i < 5; ++i) {
+	for (int i = 1; i <= 9; ++i) {
 		int size = pow(10, i);
 
 		vector<int> orig(size);
@@ -39,9 +40,10 @@ int main()
 		sortTime.reportSec();
 		sortTime.reportMilli();
 
-		cout << "Algorithm: Search\n";
 
 		auto searchIter = orig.begin() + dist(gen) - 1;
+
+		cout << "Algorithm: Search\n";
 
 		Stopwatch searchTime;
 		std::search(orig.begin(), orig.end(), searchIter, searchIter + 1);
@@ -49,6 +51,22 @@ int main()
 		searchTime.reportSec();
 		searchTime.reportMilli();
 
+		cout << "Algorithm: Binary Search\n";
+
+		Stopwatch bSearchTime;
+		std::binary_search(orig.begin(), orig.end(), *searchIter);
+		bSearchTime.stop();
+		bSearchTime.reportSec();
+		bSearchTime.reportMilli();
+
+		cout << "Algorithm: Accumulate\n";
+
+		Stopwatch accumulateTime;
+		unsigned long long int result = std::accumulate(orig.begin(), orig.end(), 0LL);
+		accumulateTime.stop();
+		accumulateTime.reportSec();
+		accumulateTime.reportMilli();
+		cout << "Sum Result: " << result << "\n";
 
 		cout << "\n";
 	}
