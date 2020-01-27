@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <numeric>
 #include <random>
@@ -15,6 +16,7 @@ using std::endl;
 using std::string;
 using std::list;
 using std::vector;
+using std::map;
 
 
 int main()
@@ -28,6 +30,7 @@ int main()
 	string word;
 	list<string> bookList;
 	vector<string> bookVec;
+	map<string, unsigned int, std::greater<string>> bookMap;
 	while (true) {
 		fin >> word;
 		if (!fin) {
@@ -42,6 +45,7 @@ int main()
 		else {
 			bookList.push_back(word);
 			bookVec.push_back(word);
+			bookMap[word] = 1;
 		}
 	}
 
@@ -49,7 +53,13 @@ int main()
 
 	std::sort(bookVec.begin(), bookVec.end());
 
-	for (auto w : bookVec) {
-		cout << w << " ";
+	Stopwatch mapSort;
+	map<string, unsigned int, std::less<string>> bookMapS(bookMap.begin(), bookMap.end());
+	mapSort.stop();
+	mapSort.reportSec();
+	mapSort.reportMilli();
+
+	for (auto w : bookMapS) {
+		cout << w.first << " ";
 	}
 }
