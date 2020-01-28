@@ -1,3 +1,11 @@
+/*
+TimeIt_1.cpp
+Andrew Ng
+Jan 26, 2020
+main setup for measuring algorithms
+*/
+
+
 #include <iostream>
 #include <vector>
 #include <algorithm>

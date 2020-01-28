@@ -1,3 +1,12 @@
+/*
+TimeIt_2.cpp
+Andrew Ng
+Jan 26, 2020
+main setup for measuring books
+and algorithms
+*/
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -5,9 +14,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-#include <numeric>
 #include <random>
-#include <cmath>
 #include "Stopwatch.h"
 
 
@@ -37,10 +44,16 @@ int main()
 			return 0;
 		}
 
+		cout << "Book file: " << b << "\n";
+
 		string word;
 		list<string> bookList;
 		vector<string> bookVec;
 		map<string, unsigned int, std::greater<string>> bookMap;
+
+		cout << "Reading into containers:\n";
+
+		Stopwatch readBook;
 		while (true) {
 			fin >> word;
 			if (!fin) {
@@ -59,6 +72,9 @@ int main()
 				bookMap[word] = 1;
 			}
 		}
+		readBook.stop();
+		readBook.reportSec();
+		readBook.reportMilli();
 
 		std::random_device rd;
 		std::mt19937 gen(rd());
@@ -67,7 +83,6 @@ int main()
 		int index = dist(gen) - 1;
 		string randStr = bookVec[index];
 
-		cout << "Book file: " << b << "\n";
 
 		cout << "Algorithm: Sort (list)\n";
 
@@ -85,6 +100,7 @@ int main()
 		listFind.reportSec();
 		listFind.reportMilli();
 
+
 		cout << "Algorithm: Sort (vector)\n";
 
 		Stopwatch vecSort;
@@ -100,6 +116,7 @@ int main()
 		vecFind.stop();
 		vecFind.reportSec();
 		vecFind.reportMilli();
+
 
 		cout << "Algorithm: Sort (map)\n";
 
@@ -117,10 +134,6 @@ int main()
 		mapFind.reportSec();
 		mapFind.reportMilli();
 
-
-		int listIndex = std::distance(bookList.begin(), listIter);
-		int vecIndex = vecIter - bookVec.begin();
-		int mapIndex = std::distance(bookMap.begin(), mapIter);
 
 		cout << "\n";
 	}
