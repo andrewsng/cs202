@@ -34,6 +34,7 @@ int main()
 		cout << "Vector Size: " << size << "\n";
 
 		cout << "Algorithm: Sort\n";
+
 		Stopwatch sortTime;
 		std::sort(orig.begin(), orig.end());
 		sortTime.stop();
