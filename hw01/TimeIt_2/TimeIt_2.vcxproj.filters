@@ -31,5 +31,17 @@
     <Text Include="TaleOfTwoCities.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="AliceWonderland.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="Frankenstein.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="MobyDick.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="SherlockHolmes.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

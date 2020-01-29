@@ -1,3 +1,11 @@
+/*
+TimeIt_1.cpp
+Andrew Ng
+Jan 26, 2020
+main setup for measuring algorithms
+*/
+
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -34,6 +42,7 @@ int main()
 		cout << "Vector Size: " << size << "\n";
 
 		cout << "Algorithm: Sort\n";
+
 		Stopwatch sortTime;
 		std::sort(orig.begin(), orig.end());
 		sortTime.stop();
