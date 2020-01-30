@@ -10,21 +10,21 @@ using std::endl;
 int main()
 {
 	cout << "Creating raw pointer.\n";
-	Jumpsuit* jPtr = new Jumpsuit("blue");
+	Jumpsuit* jPtr = new Jumpsuit;
 
 
-	cout << "Creating unique_ptr.\n";
-	auto uPtr1 = std::make_unique<Jumpsuit>("green");
+	cout << "\nCreating unique_ptr.\n";
+	auto uPtr1 = std::make_unique<Jumpsuit>("red");
 	
-	cout << "Transferring ownership to new unique pointer.\n";
+	cout << "\nTransferring ownership to new unique pointer.\n";
 	auto uPtr2 = std::move(uPtr1);
 
-	cout << "Calling a member function.\n";
-	uPtr2->setColor("red");
+	cout << "\nCalling a member function.\n";
+	uPtr2->setColor("green");
 
-	cout << "Creating shared_ptr.\n";
-	auto jPtr1 = std::make_shared<Jumpsuit>("yellow");
+	cout << "\nCreating shared_ptr.\n";
+	auto sPtr1 = std::make_shared<Jumpsuit>("blue");
 
-	cout << "Creating another shared_ptr to the same object.\n";
-	auto jPtr2 = jPtr1;
+	cout << "\nCreating another shared_ptr to the same object.\n\n";
+	auto sPtr2 = sPtr1;
 }
