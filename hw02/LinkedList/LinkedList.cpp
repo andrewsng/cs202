@@ -52,5 +52,24 @@ TEST_CASE("Linked List Operations", "[LinkedList]") {
 
 	REQUIRE((*testList.back()).str1_ == "b");
 
-	
+	testList.pop_front();
+
+	printList(testList);
+
+	REQUIRE((*testList.front()).str1_ == "b");
+
+	shared_ptr<Value> sPtr3 = std::make_shared<Value>("c", "c", "c", 2, 2, 2);
+	shared_ptr<Value> sPtr4 = std::make_shared<Value>("d", "d", "d", 3, 3, 3);
+	testList.push_back(sPtr3);
+	testList.push_back(sPtr4);
+
+	printList(testList);
+
+	REQUIRE((*testList.back()).str1_ == "d");
+
+	testList.pop_back();
+
+	REQUIRE((*testList.back()).str1_ == "c");
+
+	printList(testList);
 }
