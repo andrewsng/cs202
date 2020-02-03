@@ -83,4 +83,17 @@ TEST_CASE("Linked List Operations", "[LinkedList]") {
 
 
 	printList(testList);
+
+	shared_ptr<Value> insertPtr = std::make_shared<Value>("bc", "bc", "bc", 3, 3, 3);
+
+	auto iter2 = std::find_if(testList.begin(), testList.end(),
+		[&](shared_ptr<Value> v) {
+			return (*v).str1_ > (*insertPtr).str1_;
+		});
+	testList.insert(iter2, insertPtr);
+
+	REQUIRE((*(*std::prev(iter2))).str1_ == "bc");
+
+
+	printList(testList);
 }
