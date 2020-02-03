@@ -1,3 +1,12 @@
+/*
+LinkedList.cpp
+Andrew Ng
+Feb 2, 2020
+Linked list functions
+tested using catch2 for hw2
+*/
+
+
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
@@ -15,85 +24,105 @@ using std::list;
 using std::shared_ptr;
 
 
-struct Value
+struct Skill
 {
-	Value() : str1_("a"), str2_("a"), str3_("a"), int1_(0), int2_(0), int3_(0)
+	Skill() : name_("Empty"), type_("Empty"), damage_(0), 
+			  cost_(0), range_(0), attackTime_(0.0)
 	{};
 
-	Value(const string& ns1, const string& ns2, const string& ns3, const int& ni1, const int& ni2, const int& ni3)
-	: str1_(ns1), str2_(ns2), str3_(ns3), int1_(ni1), int2_(ni2), int3_(ni3)
+	Skill(const string& nn, const string& nt, const int& nd, 
+		  const int& nc, const int& nr, const double& nat) :
+		  name_(nn), type_(nt), damage_(nd), 
+		  cost_(nc), range_(nr), attackTime_(nat)
 	{};
 
-	string str1_;
-	string str2_;
-	string str3_;
-	int int1_;
-	int int2_;
-	int int3_;
+	string name_;
+	string type_;
+	int damage_;
+	int cost_;
+	int range_;
+	double attackTime_;
 };
 
 
-void printList(const list<shared_ptr<Value>>& list) {
+void printList(const list<shared_ptr<Skill>>& list) {
 	for (auto v : list) {
-		cout << (*v).str1_ << "\n";
+		cout << (*v).name_ << " - ";
+		cout << (*v).type_ << " - ";
+		cout << (*v).damage_ << " damage - ";
+		cout << (*v).cost_ << " mana cost - ";
+		cout << (*v).range_ << " range - ";
+		cout << (*v).attackTime_ << "s attack time\n";
 	}
 	cout << "\n";
 }
 
 
 TEST_CASE("Linked List Operations", "[LinkedList]") {
-	list<std::shared_ptr<Value>> testList;
+	
+	// the list
+	list<std::shared_ptr<Skill>> testList;
 
-	shared_ptr<Value> sPtr1 = std::make_shared<Value>();
-	shared_ptr<Value> sPtr2 = std::make_shared<Value>("b", "b", "b", 1, 1, 1);
+
+	// push_back function test
+	shared_ptr<Skill> sPtr1 = std::make_shared<Skill>
+		("Axe Throw", "Attack", 190, 0, 7, 0.5);
+	shared_ptr<Skill> sPtr2 = std::make_shared<Skill>
+		("Fireball", "Spell", 250, 40, 10, 0.8);
 	testList.push_back(sPtr1);
 	testList.push_back(sPtr2);
-
+	cout << "--Skills pushed to back--\n";
 	printList(testList);
+	REQUIRE((*testList.back()).name_ == "Fireball");
 
-	REQUIRE((*testList.back()).str1_ == "b");
 
+	// pop_front function test
+	cout << "--Front Popped--\n";
 	testList.pop_front();
-
 	printList(testList);
+	REQUIRE((*testList.front()).name_ == "Fireball");
 
-	REQUIRE((*testList.front()).str1_ == "b");
 
-	shared_ptr<Value> sPtr3 = std::make_shared<Value>("c", "c", "c", 2, 2, 2);
-	shared_ptr<Value> sPtr4 = std::make_shared<Value>("d", "d", "d", 3, 3, 3);
+	shared_ptr<Skill> sPtr3 = std::make_shared<Skill>
+		("Lightning Bolt", "Spell", 150, 20, 5, 0.3);
+	shared_ptr<Skill> sPtr4 = std::make_shared<Skill>
+		("Poison Arrow", "Attack", 170, 0, 11, 0.4);
 	testList.push_back(sPtr3);
 	testList.push_back(sPtr4);
-
+	cout << "--Skills pushed to back--\n";
 	printList(testList);
+	REQUIRE((*testList.back()).name_ == "Poison Arrow");
 
-	REQUIRE((*testList.back()).str1_ == "d");
 
+	// pop_back function test
+	cout << "--Back Popped--\n";
 	testList.pop_back();
+	printList(testList);
+	REQUIRE((*testList.back()).name_ == "Lightning Bolt");
 
-	REQUIRE((*testList.back()).str1_ == "c");
 
-
-	shared_ptr<Value> searchPtr = sPtr3;
+	// find function test
+	shared_ptr<Skill> searchPtr = sPtr3;
 	auto iter = find(testList.begin(), testList.end(), searchPtr);
-	REQUIRE((*(*iter)).str1_ == "c");
+	REQUIRE((*(*iter)).name_ == "Lightning Bolt");
 
 	searchPtr = sPtr4;
 	iter = find(testList.begin(), testList.end(), searchPtr);
 	REQUIRE(iter == testList.end());
 
 
-	printList(testList);
-
-	shared_ptr<Value> insertPtr = std::make_shared<Value>("bc", "bc", "bc", 3, 3, 3);
+	// insert function test
+	shared_ptr<Skill> insertPtr = std::make_shared<Skill>
+		("Ice Spear", "Spell", 230, 30, 3, 0.4);
 
 	auto iter2 = std::find_if(testList.begin(), testList.end(),
-		[&](shared_ptr<Value> v) {
-			return (*v).str1_ > (*insertPtr).str1_;
+		[&](shared_ptr<Skill> v) {
+			return (*v).name_ > (*insertPtr).name_;
 		});
 	testList.insert(iter2, insertPtr);
 
-	REQUIRE((*(*std::prev(iter2))).str1_ == "bc");
-
-
+	REQUIRE((*(*std::prev(iter2))).name_ == "Ice Spear");
+	cout << "--Skill Inserted in Sorted Spot--\n";
 	printList(testList);
+
 }
