@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <list>
+#include <algorithm>
 
 
 using std::cout;
@@ -70,6 +71,16 @@ TEST_CASE("Linked List Operations", "[LinkedList]") {
 	testList.pop_back();
 
 	REQUIRE((*testList.back()).str1_ == "c");
+
+
+	shared_ptr<Value> searchPtr = sPtr3;
+	auto iter = find(testList.begin(), testList.end(), searchPtr);
+	REQUIRE((*(*iter)).str1_ == "c");
+
+	searchPtr = sPtr4;
+	iter = find(testList.begin(), testList.end(), searchPtr);
+	REQUIRE(iter == testList.end());
+
 
 	printList(testList);
 }
