@@ -3,8 +3,12 @@
 #include <random>
 
 
-Cave::CaveNode::CaveNode() : nodeId(0), numConnected(0)
+Cave::CaveNode::CaveNode(int id)
 {
+	nodeId = id;
+
+	numConnected = 0;
+
 	//for (auto r : rooms) {
 	//r = std::make_shared<CaveNode>();
 	//}
@@ -28,7 +32,7 @@ Cave::Cave(int size)
 
 	for (int i = 0; i < size; ++i) {
 		std::cout << i << "\n";
-		Cave::CaveNode newNode;
+		Cave::CaveNode newNode(i);
 		caveRooms.push_back(newNode);
 	}
 
@@ -86,7 +90,19 @@ void Cave::gotoAdjacentRoom(int room)
 
 }
 
-void Cave::connect(int room1, int room2)
+void Cave::connect(int r1, int r2)
 {
+	auto it1 = caveRooms.begin() + r1;
+	auto it2 = caveRooms.begin() + r2;
+	std::cout << "test\n";
+	std::cout << r1 << " " << r2 << "\n";
+	int n1 = (*it1).numConnected;
+	int n2 = (*it2).numConnected;
+	std::cout << n1 << " " << n2 << "\n";
 
+	(caveRooms[r1].connIds).push_back(r2);
+	(caveRooms[r2].connIds).push_back(r1);
+
+	caveRooms[r1].numConnected++;
+	caveRooms[r2].numConnected++;
 }

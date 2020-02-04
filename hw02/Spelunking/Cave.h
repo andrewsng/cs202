@@ -32,7 +32,7 @@ public:
 
 	// connect two rooms together
 
-	void connect(int room1, int room2);
+	void connect(int r1, int r2);
 
 	// print the short description of the room
 
@@ -55,7 +55,7 @@ private:
 	static constexpr int MaxAdjacentRooms = 3;
 
 	struct CaveNode {
-		const int nodeId;
+		int nodeId;
 
 		int numConnected;
 
@@ -68,7 +68,7 @@ private:
 		std::string longDesc; // a long description of this room
 
 		// constructor should initialize rooms to nullptr
-		CaveNode();
+		CaveNode(int id);
 
 	};
 
