@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cave.cpp" />
+    <ClCompile Include="Spelunking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cave.h" />

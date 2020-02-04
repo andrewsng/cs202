@@ -11,14 +11,16 @@
 
 class Cave {
 public:
+	
+	Cave(int size);
 
 	// what is the number of rooms in the cave?
 
-	bool size() const;
+	int size() const;
 
 	// return current room
 
-	int getCurrentRoom();
+	int getCurrentRoom() const;
 
 	// go to room in the cave complex
 
@@ -34,34 +36,37 @@ public:
 
 	// print the short description of the room
 
-	void printShortDesc(int room) const;
+	//void printShortDesc(int room) const;
 
 	// print the long description of the room
 
-	void printLongDesc(int room) const;
+	//void printLongDesc(int room) const;
 
 	// save rooms to an output stream
 
-	void saveRooms(std::ostream& os) const;
+	//void saveRooms(std::ostream& os) const;
 
 	// read rooms from an input stream
 
-	void readRooms(std::istream& is);
+	//void readRooms(std::istream& is);
 
 private:
 
 	static constexpr int MaxAdjacentRooms = 3;
 
 	struct CaveNode {
+		const int nodeId;
+
+		int numConnected;
 
 		std::weak_ptr<CaveNode> rooms[MaxAdjacentRooms];
 
-		std::string shortdesc; // a short description of this room
+		std::string shortDesc; // a short description of this room
 
-		std::string longdesc; // a long description of this room
+		std::string longDesc; // a long description of this room
 
 		// constructor should initialize rooms to nullptr
-		CaveNode();
+		CaveNode(int id);
 
 	};
 
