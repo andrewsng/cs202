@@ -8,5 +8,5 @@ using std::endl;
 
 int main()
 {
-
+	Cave newCave(15);
 }

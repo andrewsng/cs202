@@ -1,11 +1,16 @@
 #include "Cave.h"
+#include <iostream>
 #include <random>
 
 
-Cave::CaveNode::CaveNode(int id) : nodeId(id), numConnected(0)
+Cave::CaveNode::CaveNode() : nodeId(0), numConnected(0)
 {
-	for (auto r : rooms) {
-		r = std::weak_ptr<CaveNode>();
+	//for (auto r : rooms) {
+	//r = std::make_shared<CaveNode>();
+	//}
+
+	for (int i = 0; i < MaxAdjacentRooms; ++i) {
+		connIds.push_back(0);
 	}
 
 	shortDesc = "default short description";
@@ -15,30 +20,48 @@ Cave::CaveNode::CaveNode(int id) : nodeId(id), numConnected(0)
 
 Cave::Cave(int size)
 {
+	std::vector<CaveNode> caveRooms;
+
 	currentRoom = 1;
 
+	std::cout << "made it\n";
+
 	for (int i = 0; i < size; ++i) {
-		caveRooms.push_back(std::make_shared<CaveNode>(i + 1));
+		std::cout << i << "\n";
+		Cave::CaveNode newNode;
+		caveRooms.push_back(newNode);
 	}
+
+	for (auto c : caveRooms) {
+		std::cout << "id: " << c.nodeId << "\n";
+	}
+
+	std::cout << "made it2\n";
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(1, size);
+	std::uniform_int_distribution<> dist(0, size-1);
 
-	for (size_t i = 0; i < caveRooms.size(); ++i) {
-		while (true) {
-			int randId = dist(gen);
-			if (randId = i + 1) {
-				continue;
-			}
-			else if (caveRooms[randId - 1]->numConnected == MaxAdjacentRooms) {
-				continue;
-			}
-			else {
-				connect(i + 1, randId);
-			}
+	for (int i = 0; i < caveRooms.size(); ++i) {
+		int randId = dist(gen);
+		if (randId == i) {
+
+		}
+		else if (caveRooms[randId].numConnected == MaxAdjacentRooms) {
+			
+		}
+		else {
+			connect(i, randId);
 		}
 
+	}
+
+	for (auto r : caveRooms) {
+		std::cout << "id: " << r.nodeId << "\n";
+		std::cout << "connected to: \n";
+		for (auto c : r.connIds) {
+			std::cout << c << "\n";
+		}
 	}
 }
 

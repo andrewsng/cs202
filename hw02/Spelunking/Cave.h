@@ -59,20 +59,24 @@ private:
 
 		int numConnected;
 
-		std::weak_ptr<CaveNode> rooms[MaxAdjacentRooms];
+		std::vector<int> connIds;
+
+		//std::shared_ptr<CaveNode> rooms[MaxAdjacentRooms];
 
 		std::string shortDesc; // a short description of this room
 
 		std::string longDesc; // a long description of this room
 
 		// constructor should initialize rooms to nullptr
-		CaveNode(int id);
+		CaveNode();
 
 	};
 
 	using CaveNodePtr = std::shared_ptr<CaveNode>;
 
-	std::vector<CaveNodePtr> caveRooms;
+	//std::vector<CaveNodePtr> caveRooms;
+
+	std::vector<CaveNode> caveRooms;
 	
 	int currentRoom;
 
