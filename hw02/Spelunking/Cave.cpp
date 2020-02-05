@@ -1,6 +1,7 @@
 #include "Cave.h"
 #include <iostream>
 #include <random>
+#include <algorithm>
 
 
 Cave::CaveNode::CaveNode(int id)
@@ -9,14 +10,6 @@ Cave::CaveNode::CaveNode(int id)
 
 	numConnected = 0;
 
-	//for (auto r : rooms) {
-	//r = std::make_shared<CaveNode>();
-	//}
-
-	for (int i = 0; i < MaxAdjacentRooms; ++i) {
-		connIds.push_back(0);
-	}
-
 	shortDesc = "default short description";
 	longDesc = "default long description";
 }
@@ -24,38 +17,48 @@ Cave::CaveNode::CaveNode(int id)
 
 Cave::Cave(int size)
 {
-	std::vector<CaveNode> caveRooms;
-
 	currentRoom = 1;
 
-	std::cout << "made it\n";
-
 	for (int i = 0; i < size; ++i) {
-		std::cout << i << "\n";
-		Cave::CaveNode newNode(i);
+		CaveNode newNode(i);
 		caveRooms.push_back(newNode);
 	}
-
-	for (auto c : caveRooms) {
-		std::cout << "id: " << c.nodeId << "\n";
-	}
-
-	std::cout << "made it2\n";
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dist(0, size-1);
 
-	for (int i = 0; i < caveRooms.size(); ++i) {
+	int index = 0;
+	int fails = 0;
+	while (true) {
+		if (fails >= (2 * caveRooms.size())) {
+			break;
+		}
+		if (index == caveRooms.size()) {
+			index = 0;
+		}
 		int randId = dist(gen);
-		if (randId == i) {
-
+		auto idPtr = &(caveRooms[index].connIds);
+		if (randId == index) {
+			fails++;
+			continue;
+		}
+		else if (std::count(idPtr->begin(), idPtr->end(), randId)) {
+			fails++;
+			continue;
+		}
+		else if (caveRooms[index].numConnected == MaxAdjacentRooms) {
+			fails++;
+			continue;
 		}
 		else if (caveRooms[randId].numConnected == MaxAdjacentRooms) {
-			
+			fails++;
+			continue;
 		}
 		else {
-			connect(i, randId);
+			this->connect(index, randId);
+			fails = 0;
+			index++;
 		}
 
 	}
@@ -87,18 +90,17 @@ void Cave::gotoRoom(int room)
 
 void Cave::gotoAdjacentRoom(int room)
 {
-
+	std::cout << "Room " << room;
+	std::cout << " is connected to:\n";
+	for (auto c : caveRooms[room].connIds) {
+		std::cout << c << "\n";
+	}
 }
 
 void Cave::connect(int r1, int r2)
 {
-	auto it1 = caveRooms.begin() + r1;
-	auto it2 = caveRooms.begin() + r2;
-	std::cout << "test\n";
-	std::cout << r1 << " " << r2 << "\n";
-	int n1 = (*it1).numConnected;
-	int n2 = (*it2).numConnected;
-	std::cout << n1 << " " << n2 << "\n";
+	int n1 = (caveRooms[r1]).numConnected;
+	int n2 = (caveRooms[r2]).numConnected;
 
 	(caveRooms[r1].connIds).push_back(r2);
 	(caveRooms[r2].connIds).push_back(r1);
