@@ -1,3 +1,12 @@
+/*
+Cave.h
+Andrew Ng
+Feb 5, 2020
+Header for Cave class
+*/
+
+
+
 #pragma once
 
 #ifndef CAVE_H
@@ -7,6 +16,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <fstream>
 
 
 class Cave {
@@ -34,11 +44,11 @@ public:
 
 	void connect(int r1, int r2);
 
-	void printAdjacent() const;
+	void printAdjacent(bool shortdesc) const;
 
 	// print the short description of the room
 
-	//void printShortDesc(int room) const;
+	void printShortDesc(int room) const;
 
 	// print the long description of the room
 
@@ -46,11 +56,13 @@ public:
 
 	// save rooms to an output stream
 
-	//void saveRooms(std::ostream& os) const;
+	void saveRooms(std::ofstream& fout) const;
 
 	// read rooms from an input stream
 
-	//void readRooms(std::istream& is);
+	void readRooms(std::ifstream& fin);
+
+	void printConnections() const;
 
 private:
 
@@ -61,22 +73,17 @@ private:
 
 		int numConnected;
 
-		std::vector<int> connIds;
+		bool visited;
 
-		//std::shared_ptr<CaveNode> rooms[MaxAdjacentRooms];
+		std::vector<int> connIds;
 
 		std::string shortDesc; // a short description of this room
 
 		std::string longDesc; // a long description of this room
 
-		// constructor should initialize rooms to nullptr
 		CaveNode(int id);
 
 	};
-
-	using CaveNodePtr = std::shared_ptr<CaveNode>;
-
-	//std::vector<CaveNodePtr> caveRooms;
 
 	std::vector<Cave::CaveNode> caveRooms;
 	

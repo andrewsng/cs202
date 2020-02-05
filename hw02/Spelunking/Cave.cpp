@@ -1,7 +1,17 @@
+/*
+Cave.cpp
+Andrew Ng
+Feb 5, 2020
+Source code for Cave class
+*/
+
+
+
 #include "Cave.h"
 #include <iostream>
 #include <random>
 #include <algorithm>
+#include <sstream>
 
 
 Cave::CaveNode::CaveNode(int id)
@@ -10,8 +20,10 @@ Cave::CaveNode::CaveNode(int id)
 
 	numConnected = 0;
 
-	shortDesc = "default short description";
-	longDesc = "default long description";
+	visited = 0;
+
+	shortDesc = "short desc.";
+	longDesc = "long description";
 }
 
 
@@ -62,14 +74,6 @@ Cave::Cave(int size)
 		}
 
 	}
-
-	for (auto r : caveRooms) {
-		std::cout << "id: " << r.nodeId << "\n";
-		std::cout << "connected to: \n";
-		for (auto c : r.connIds) {
-			std::cout << c << "\n";
-		}
-	}
 }
 
 
@@ -78,15 +82,18 @@ int Cave::size() const
 	return caveRooms.size();
 }
 
+
 int Cave::getCurrentRoom() const
 {
 	return currentRoom;
 }
 
+
 void Cave::gotoRoom(int room)
 {
 	currentRoom = room;
 }
+
 
 void Cave::gotoAdjacentRoom(int room)
 {
@@ -105,10 +112,21 @@ void Cave::gotoAdjacentRoom(int room)
 			std::cout << "Not an available option.\n";
 			continue;
 		}
+		std::cout << "Moving to new room: \n";
+		std::cout << newLocation << " ";
+		if (caveRooms[newLocation].visited) {
+			printShortDesc(newLocation);
+		}
+		else {
+			printLongDesc(newLocation);
+		}
+		std::cout << "\n\n";
 		gotoRoom(newLocation);
+		caveRooms[newLocation].visited = 1;
 		break;
 	}
 }
+
 
 void Cave::connect(int r1, int r2)
 {
@@ -122,15 +140,93 @@ void Cave::connect(int r1, int r2)
 	caveRooms[r2].numConnected++;
 }
 
-void Cave::printAdjacent() const
+
+void Cave::printAdjacent(bool shortdesc) const
 {
-	for (auto c : caveRooms[currentRoom].connIds) {
-		std::cout << c << " ";
+	if (shortdesc) {
+		for (auto c : caveRooms[currentRoom].connIds) {
+			std::cout << c << " ";
+			printShortDesc(currentRoom);
+			std::cout << "\n";
+		}
+	}
+	else {
+		for (auto c : caveRooms[currentRoom].connIds) {
+			std::cout << c << " ";
+			printLongDesc(currentRoom);
+			std::cout << "\n";
+		}
 	}
 	std::cout << "\n";
 }
 
+
+void Cave::printShortDesc(int room) const
+{
+	std::cout << "(" << caveRooms[room].shortDesc << ")";
+}
+
+
 void Cave::printLongDesc(int room) const
 {
+	std::cout << "(" << caveRooms[room].longDesc << ")";
+}
 
+
+void Cave::saveRooms(std::ofstream& fout) const
+{
+	fout << currentRoom << "\n";
+	for (auto r : caveRooms) {
+		fout << r.nodeId << "\n";
+		fout << r.numConnected << "\n";
+		fout << r.shortDesc << "\n";
+		fout << r.longDesc << "\n";
+		for (auto c : r.connIds) {
+			fout << c << " ";
+		}
+		fout << "\n";
+	}
+}
+
+
+void Cave::readRooms(std::ifstream& fin)
+{
+	caveRooms.clear();
+	fin >> currentRoom;
+	while (true) {
+		int newId;
+		fin >> newId;
+		if (!fin) {
+			if (fin.eof()) {
+				break;
+			}
+			else {
+				std::cout << "Could not read line\n";
+				break;
+			}
+		}
+		CaveNode newNode(newId);
+		fin >> newNode.numConnected;
+		fin.ignore(99999, '\n');
+		std::getline(fin, newNode.shortDesc);
+		std::getline(fin, newNode.longDesc);
+		for (int i = 0; i < newNode.numConnected; ++i) {
+			int connId;
+			fin >> connId;
+			(newNode.connIds).push_back(connId);
+		}
+		caveRooms.push_back(newNode);
+	}
+}
+
+
+void Cave::printConnections() const
+{
+	for (auto r : caveRooms) {
+		std::cout << "id: " << r.nodeId << "\n";
+		std::cout << "connected to: \n";
+		for (auto c : r.connIds) {
+			std::cout << c << "\n";
+		}
+	}
 }

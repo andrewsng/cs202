@@ -129,6 +129,10 @@
   <ItemGroup>
     <ClInclude Include="Cave.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="cavein.txt" />
+    <Text Include="caveout.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

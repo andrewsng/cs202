@@ -27,4 +27,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="cavein.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="caveout.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
