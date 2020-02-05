@@ -20,7 +20,7 @@ Cave::Cave(int size)
 	currentRoom = 1;
 
 	for (int i = 0; i < size; ++i) {
-		CaveNode newNode(i);
+		Cave::CaveNode newNode(i);
 		caveRooms.push_back(newNode);
 	}
 
@@ -90,10 +90,23 @@ void Cave::gotoRoom(int room)
 
 void Cave::gotoAdjacentRoom(int room)
 {
-	std::cout << "Room " << room;
-	std::cout << " is connected to:\n";
-	for (auto c : caveRooms[room].connIds) {
-		std::cout << c << "\n";
+	while (true) {
+		std::cout << "Enter an adjacent room # to move there.\n";
+		int newLocation;
+		std::cin >> newLocation;
+		auto idPtr = &(caveRooms[room].connIds);
+		if (!std::cin) {
+			std::cout << "Not an available option.\n";
+			std::cin.clear();
+			std::cin.ignore(99999, '\n');
+			continue;
+		}
+		if (!std::count(idPtr->begin(), idPtr->end(), newLocation)) {
+			std::cout << "Not an available option.\n";
+			continue;
+		}
+		gotoRoom(newLocation);
+		break;
 	}
 }
 
@@ -107,4 +120,17 @@ void Cave::connect(int r1, int r2)
 
 	caveRooms[r1].numConnected++;
 	caveRooms[r2].numConnected++;
+}
+
+void Cave::printAdjacent() const
+{
+	for (auto c : caveRooms[currentRoom].connIds) {
+		std::cout << c << " ";
+	}
+	std::cout << "\n";
+}
+
+void Cave::printLongDesc(int room) const
+{
+
 }

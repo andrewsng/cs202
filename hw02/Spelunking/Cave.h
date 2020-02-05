@@ -34,13 +34,15 @@ public:
 
 	void connect(int r1, int r2);
 
+	void printAdjacent() const;
+
 	// print the short description of the room
 
 	//void printShortDesc(int room) const;
 
 	// print the long description of the room
 
-	//void printLongDesc(int room) const;
+	void printLongDesc(int room) const;
 
 	// save rooms to an output stream
 
@@ -76,11 +78,11 @@ private:
 
 	//std::vector<CaveNodePtr> caveRooms;
 
-	std::vector<CaveNode> caveRooms;
+	std::vector<Cave::CaveNode> caveRooms;
 	
 	int currentRoom;
 
 };
 
 
-#endif // CAVE_HPP
+#endif
