@@ -40,16 +40,20 @@ int main()
 		return 0;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+
 	glViewport(0, 0, 1280, 720);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	float angle = 0.0;
+	float angle = 0.1;
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glMatrixMode(GL_MODELVIEW);
 
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(0.0f, -0.5f, 0.5f);
@@ -74,8 +78,6 @@ int main()
 		glEnd();
 
 		glRotatef(angle, 1.0f, 0.0f, 0.0f);
-
-		angle += 0.00001;
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
