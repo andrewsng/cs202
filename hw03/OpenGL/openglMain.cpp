@@ -48,16 +48,34 @@ int main()
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_TRIANGLES);
-		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(cos(angle + 1.57), -1.0f, sin(angle + 1.57));
-		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(cos(angle + 0.765), 1.0f, sin(angle + 0.765));
-		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(cos(angle), -1.0f, sin(angle));
+		glBegin(GL_QUADS);
+		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(0.0f, -0.5f, 0.5f);
+		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.5f, 0.5f);
+		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
+		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+
+		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.0f, 0.5f, 0.5f);
+		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.0f, -0.5f, 0.5f);
+		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.5f, -0.5f, 0.0f);
+		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+
+		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.5f, -0.5f, 0.0f);
+		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.0f, -0.5f, -0.5f);
+		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.0f, 0.5f, -0.5f);
+
+		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(0.0f, 0.5f, -0.5f);
+		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(0.0f, -0.5f, -0.5f);
+		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
 		glEnd();
 
-		angle += 0.005;
+		glRotatef(angle, 1.0f, 0.0f, 0.0f);
+
+		angle += 0.00001;
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
