@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cmath>
 
 
 using std::cout;
@@ -43,6 +44,7 @@ int main()
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+	float angle = 0.0;
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
@@ -50,10 +52,12 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glBegin(GL_TRIANGLES);
-		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 0.0f);
-		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
-		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(1.0f, -1.0f, 0.0f);
+		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(cos(angle + 1.57), -1.0f, sin(angle + 1.57));
+		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(cos(angle + 0.765), 1.0f, sin(angle + 0.765));
+		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(cos(angle), -1.0f, sin(angle));
 		glEnd();
+
+		angle += 0.005;
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
