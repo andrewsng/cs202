@@ -32,13 +32,32 @@ bool ReadLine(std::istream& is, vector<string>& tokens,
 {
 	string line;
 	std::getline(is, line);
+
+	int sizeDiff = tokens.size();
 	if (line.empty()) {
 		tokens.push_back("blank line");
 	}
 	else {
 		LineToTokens(line, tokens);
 	}
-	
+	sizeDiff = tokens.size() - sizeDiff;
+
+	int lineNum;
+	if (linecols.empty()) {
+		lineNum = 1;
+	}
+	else {
+		lineNum = linecols.back().first + 1;
+	}
+
+	int colNum = 0;
+	for (auto it = tokens.end() - sizeDiff; it < tokens.end(); ++it) {
+		colNum = line.find(*it, colNum);
+
+		colNum += (*it).size();
+	}
+
+	linecols.push_back(std::make_pair(lineNum, colNum));
 	return 1;
 }
 
