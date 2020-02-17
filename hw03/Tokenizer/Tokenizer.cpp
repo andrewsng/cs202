@@ -1,3 +1,12 @@
+/*
+Tokenizer.cpp
+Andrew Ng
+Feb 16, 2020
+Simple Tokenizer program
+for HW3
+*/
+
+
 #include <iostream>
 #include <string>
 #include <vector>
