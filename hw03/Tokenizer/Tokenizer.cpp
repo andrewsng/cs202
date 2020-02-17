@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <iomanip>
 
 
 using std::cout;
@@ -32,9 +33,13 @@ bool ReadLine(std::istream& is, vector<string>& tokens,
 {
 	string line;
 	std::getline(is, line);
+	if (!is) {
+		return 0;
+	}
 
 	int sizeDiff = tokens.size();
 	if (line.empty()) {
+		line = "blank line";
 		tokens.push_back("blank line");
 	}
 	else {
@@ -54,10 +59,11 @@ bool ReadLine(std::istream& is, vector<string>& tokens,
 	for (auto it = tokens.end() - sizeDiff; it < tokens.end(); ++it) {
 		colNum = line.find(*it, colNum);
 
+		linecols.push_back(std::make_pair(lineNum, colNum + 1));
+
 		colNum += (*it).size();
 	}
 
-	linecols.push_back(std::make_pair(lineNum, colNum));
 	return 1;
 }
 
@@ -65,8 +71,10 @@ bool ReadLine(std::istream& is, vector<string>& tokens,
 void PrintTokens(std::ostream& os, const vector<string>& tokens,
 	const vector<pair<int, int>>& linecols)
 {
-	for (auto t : tokens) {
-		cout << t << "\n";
+	for (size_t i = 0; i < tokens.size(); ++i) {
+		cout << "Line " << std::setw(5) << linecols[i].first << ", ";
+		cout << "Column " << std::setw(4) << linecols[i].second << ": ";
+		cout << "\"" << tokens[i] << "\"\n";
 	}
 }
 
@@ -75,9 +83,16 @@ int main(int argc, char** argv)
 {
 	vector<string> tokens;
 	vector<pair<int, int>> linecols;
-
-	for (int i = 0; i < 3; ++i) {
-		ReadLine(std::cin, tokens, linecols);
+	std::ifstream fin("n16berry.txt");
+	if (!fin) {
+		cout << "Error opening file\n";
+		return -1;
 	}
+
+	bool run = 1;
+	while (run) {
+		run = ReadLine(fin, tokens, linecols);
+	}
+
 	PrintTokens(cout, tokens, linecols);
 }
