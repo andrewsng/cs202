@@ -114,6 +114,10 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+	fin.seekg(0, fin.end);
+	size_t fileSize = fin.tellg();
+	fin.seekg(0, fin.beg);
+
 	bool run = 1;
 	Stopwatch duration;
 	while (run) {
@@ -131,4 +135,6 @@ int main(int argc, char** argv)
 	duration.stop();
 	duration.reportMilli();
 	duration.reportSec();
+
+	cout << "\nFile Size: " << fileSize << " bytes" << endl;
 }
