@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <iomanip>
+#include "Stopwatch.h"
 
 
 using std::cout;
@@ -11,6 +12,9 @@ using std::endl;
 using std::string;
 using std::vector;
 using std::pair;
+
+
+bool lineOnly;
 
 
 bool LineToTokens(const string& line, vector<string>& tokens)
@@ -44,6 +48,9 @@ bool ReadLine(std::istream& is, vector<string>& tokens,
 	}
 	else {
 		LineToTokens(line, tokens);
+	}
+	if (lineOnly) {
+		return 1;
 	}
 	sizeDiff = tokens.size() - sizeDiff;
 
@@ -81,18 +88,38 @@ void PrintTokens(std::ostream& os, const vector<string>& tokens,
 
 int main(int argc, char** argv)
 {
+	if (argc >= 3) {
+		if (argv[2] == string("--lineonly")) {
+			lineOnly = 1;
+		}
+		else {
+			lineOnly = 0;
+		}
+	}
+
 	vector<string> tokens;
 	vector<pair<int, int>> linecols;
-	std::ifstream fin("n16berry.txt");
+	std::ifstream fin(argv[1]);
 	if (!fin) {
 		cout << "Error opening file\n";
 		return -1;
 	}
 
 	bool run = 1;
+	Stopwatch duration;
 	while (run) {
 		run = ReadLine(fin, tokens, linecols);
 	}
 
-	PrintTokens(cout, tokens, linecols);
+	if (lineOnly) {
+		cout << "\nLineOnly Time: \n";
+	}
+	else {
+		PrintTokens(cout, tokens, linecols);
+		cout << "\nReadLines/PrintTokens Time: \n";
+	}
+
+	duration.stop();
+	duration.reportMilli();
+	duration.reportSec();
 }
