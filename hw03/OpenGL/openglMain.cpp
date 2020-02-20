@@ -1,3 +1,12 @@
+/*
+openglMain.cpp
+Andrew Ng
+Feb 16, 2020
+OpenGL 1.1 Intro
+for HW3
+*/
+
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -50,31 +59,31 @@ int main()
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glMatrixMode(GL_MODELVIEW);
 
 		glBegin(GL_QUADS);
-		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(0.0f, -0.5f, 0.5f);
-		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.5f, 0.5f);
-		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
-		glColor3f(1.0f, 0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+		glColor3f(1.0f, 0.3f, 0.2f); glVertex3f(0.0f, -0.25f, 0.5f);
+		glColor3f(1.0f, 0.3f, 0.2f); glVertex3f(0.0f, 0.25f, 0.5f);
+		glColor3f(1.0f, 0.3f, 0.2f); glVertex3f(-0.5f, 0.25f, 0.0f);
+		glColor3f(1.0f, 0.3f, 0.2f); glVertex3f(-0.5f, -0.25f, 0.0f);
 
-		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.0f, 0.5f, 0.5f);
-		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.0f, -0.5f, 0.5f);
-		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.5f, -0.5f, 0.0f);
-		glColor3f(0.0f, 1.0f, 0.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+		glColor3f(0.1f, 0.7f, 0.3f); glVertex3f(0.0f, 0.25f, 0.5f);
+		glColor3f(0.1f, 0.7f, 0.3f); glVertex3f(0.0f, -0.25f, 0.5f);
+		glColor3f(0.1f, 0.7f, 0.3f); glVertex3f(0.5f, -0.25f, 0.0f);
+		glColor3f(0.1f, 0.7f, 0.3f); glVertex3f(0.5f, 0.25f, 0.0f);
 
-		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.5f, 0.5f, 0.0f);
-		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.5f, -0.5f, 0.0f);
-		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.0f, -0.5f, -0.5f);
-		glColor3f(0.0f, 0.0f, 1.0f); glVertex3f(0.0f, 0.5f, -0.5f);
+		glColor3f(0.2f, 0.4f, 1.0f); glVertex3f(0.5f, 0.25f, 0.0f);
+		glColor3f(0.2f, 0.4f, 1.0f); glVertex3f(0.5f, -0.25f, 0.0f);
+		glColor3f(0.2f, 0.4f, 1.0f); glVertex3f(0.0f, -0.25f, -0.5f);
+		glColor3f(0.2f, 0.4f, 1.0f); glVertex3f(0.0f, 0.25f, -0.5f);
 
-		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(0.0f, 0.5f, -0.5f);
-		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(0.0f, -0.5f, -0.5f);
-		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
-		glColor3f(1.0f, 1.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
+		glColor3f(1.0f, 0.8f, 0.2f); glVertex3f(0.0f, 0.25f, -0.5f);
+		glColor3f(1.0f, 0.8f, 0.2f); glVertex3f(0.0f, -0.25f, -0.5f);
+		glColor3f(1.0f, 0.8f, 0.2f); glVertex3f(-0.5f, -0.25f, 0.0f);
+		glColor3f(1.0f, 0.8f, 0.2f); glVertex3f(-0.5f, 0.25f, 0.0f);
 		glEnd();
 
 		glRotatef(angle, 1.0f, 0.0f, 0.0f);
