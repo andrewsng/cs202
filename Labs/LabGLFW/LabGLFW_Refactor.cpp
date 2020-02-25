@@ -116,7 +116,6 @@ int main(void) {
 		glLoadIdentity();
 		GLfloat cameraLocation[] = { 0.0f, 0.0f, -4.0f };
 		glTranslatef(cameraLocation[0], cameraLocation[1], cameraLocation[2]);
-		glRotatef(30.0f, 0.0f, 1.0f, 0.0f);
 
 		// Setup one white directional light pointing almost "up"
 		glEnable(GL_LIGHTING);
