@@ -18,5 +18,8 @@
     <ClCompile Include="labglfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LabGLFW_Refactor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

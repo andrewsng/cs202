@@ -4,7 +4,7 @@
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "opengl32.lib")
 
-int main(void) {
+int main2(void) {
 	GLFWwindow* window;
 
 	/* Initialize the library */
@@ -33,7 +33,8 @@ int main(void) {
 		glViewport(0, 0, w, h);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(-1, 1, -1, 1, -1, 1); // left,right,bottom,top,znear,zfar
+		double ar = (double)w / (double)h;
+		glOrtho(-ar, ar, -1, 1, -1, 1); // left,right,bottom,top,znear,zfar
 		glMatrixMode(GL_MODELVIEW);
 
 
