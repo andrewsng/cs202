@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HuntTheWumpus", "HuntTheWumpus.vcxproj", "{B102612F-E90F-49FE-8B41-6AA02EEBC60D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Debug|x64.ActiveCfg = Debug|x64
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Debug|x64.Build.0 = Debug|x64
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Debug|x86.ActiveCfg = Debug|Win32
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Debug|x86.Build.0 = Debug|Win32
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Release|x64.ActiveCfg = Release|x64
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Release|x64.Build.0 = Release|x64
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Release|x86.ActiveCfg = Release|Win32
+		{B102612F-E90F-49FE-8B41-6AA02EEBC60D}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C82DE9E2-CF46-4A6B-BC66-9D0B6E4E5338}
+	EndGlobalSection
+EndGlobal
