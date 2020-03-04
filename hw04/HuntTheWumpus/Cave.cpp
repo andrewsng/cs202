@@ -38,11 +38,13 @@ Cave::Cave(int size)
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dist(0, size-1);
+	std::vector<double> prob(size, 1.0);
 
 	int index = 0;
 	int fails = 0;
 	while (true) {
+		std::discrete_distribution<int> dist(prob.begin(), prob.end());
+		std::find_if(prob.begin(), prob.end(), != 0.0)
 		if (fails >= (2 * caveRooms.size())) {
 			break;
 		}
@@ -51,6 +53,15 @@ Cave::Cave(int size)
 		}
 		int randId = dist(gen);
 		auto idPtr = &(caveRooms[index].connIds);
+		if (caveRooms[index].numConnected == MaxAdjacentRooms) {
+			prob[index] = 0.0;
+			index++;
+			continue;
+		}
+		if (caveRooms[randId].numConnected == MaxAdjacentRooms) {
+			prob[randId] = 0.0;
+			continue;
+		}
 		if (randId == index) {
 			fails++;
 			continue;
@@ -59,18 +70,23 @@ Cave::Cave(int size)
 			fails++;
 			continue;
 		}
-		else if (caveRooms[index].numConnected == MaxAdjacentRooms) {
-			fails++;
-			continue;
-		}
-		else if (caveRooms[randId].numConnected == MaxAdjacentRooms) {
-			fails++;
-			continue;
-		}
 		else {
 			this->connect(index, randId);
 			fails = 0;
-			index++;
+		}
+		int fb = fails;
+		/*for (auto p : prob) {
+			std::cout << p << "\n";
+		}
+		std::cout << "\n";*/
+		for (auto p : prob) {
+			if (p != 0.0) {
+				fails++;
+				break;
+			}
+		}
+		if (fb  == fails) {
+			break;
 		}
 
 	}

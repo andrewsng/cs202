@@ -17,10 +17,10 @@ using std::cout;
 using std::endl;
 
 
-int maino()
+int main()
 {
-	Cave newCave(15);
-	std::ofstream fout("caveout.txt");
+	Cave newCave(20);
+	/*std::ofstream fout("caveout.txt");
 	if (!fout) {
 		cout << "Could not write to file\n";
 		return 0;
@@ -29,7 +29,7 @@ int maino()
 	if (!fin) {
 		cout << "Could not read file\n";
 		return 0;
-	}
+	}*/
 	while (true) {
 		int location = newCave.getCurrentRoom();
 		cout << "You are in room " << location << ".\n";
@@ -60,11 +60,11 @@ int maino()
 			continue;
 		case 3:
 			cout << "Saving cave...\n";
-			newCave.saveRooms(fout);
+			//newCave.saveRooms(fout);
 			continue;
 		case 4:
 			cout << "Opening cave...\n";
-			newCave.readRooms(fin);
+			//newCave.readRooms(fin);
 			continue;
 		case 5:
 			newCave.printConnections();
@@ -80,4 +80,5 @@ int maino()
 		}
 		break;
 	}
+	return 0;
 }
