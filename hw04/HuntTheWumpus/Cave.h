@@ -34,25 +34,22 @@ public:
 
 	int updateGame();
 
+	void getAdj(std::vector<int>& reach,
+		const int& current);
+
+	bool shootArrow();
+
 	int size() const;
 
 	int getCurrentRoom() const;
 
 	void gotoRoom(int room);
 
-	void gotoAdjacentRoom(int room);
+	void gotoAdjacentRoom();
 
 	void connect(int r1, int r2);
 
-	void printAdjacent(bool shortdesc) const;
-
-	void printShortDesc(int room) const;
-
-	void printLongDesc(int room) const;
-
-	void saveRooms(std::ofstream& fout) const;
-
-	void readRooms(std::ifstream& fin);
+	void printAdjacent() const;
 
 	void printConnections() const;
 
@@ -72,10 +69,6 @@ private:
 		bool visited;
 
 		std::vector<int> connIds;
-
-		std::string shortDesc; // a short description of this room
-
-		std::string longDesc; // a long description of this room
 	};
 
 	std::vector<Cave::CaveNode> caveRooms;
@@ -87,6 +80,8 @@ private:
 	int pit;
 
 	int bat;
+
+	int arrows = 5;
 };
 
 

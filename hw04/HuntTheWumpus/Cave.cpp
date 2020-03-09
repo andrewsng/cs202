@@ -6,7 +6,6 @@ Source code for Cave class
 */
 
 
-
 #include "Cave.h"
 #include <iostream>
 #include <random>
@@ -16,10 +15,7 @@ Source code for Cave class
 
 
 Cave::CaveNode::CaveNode(int id) : nodeId(id), numConnected(0), visited(0)
-{
-	shortDesc = "short desc.";
-	longDesc = "long description";
-}
+{}
 
 
 Cave::Cave(int size)
@@ -143,6 +139,10 @@ int Cave::updateGame()
 	std::mt19937 gen(rd());
 	std::vector<double> prob(size, 1.0);
 
+	if (arrows == 0) {
+		return 3;
+	}
+
 	if (currentRoom == wumpus) {
 		return 0;
 	}
@@ -160,18 +160,77 @@ int Cave::updateGame()
 		dist = std::discrete_distribution<int>(prob.begin(), prob.end());
 		setBat(dist(gen));
 		if (updateGame() == 0) {
-			std::cout << "The giant bat moves you to the Wumpus' room.\n";
+			std::cout << "The giant bat moves you to the Wumpus' room.\n\n";
 			return 0;
 		}
 		if (updateGame() == 1) {
-			std::cout << "The giant bat moves you over the bottomless pit.\n";
+			std::cout << "The giant bat moves you over the bottomless pit.\n\n";
 			return 1;
 		}
-		std::cout << "The giant bat moves you to another room.\n";
+		std::cout << "The giant bat moves you to another room.\n\n";
 		return 2;
 	}
 }
 
+
+void Cave::getAdj(std::vector<int>& reach, const int& current) {
+	auto idPtr = &(caveRooms[current].connIds);
+	for (auto c : *idPtr) {
+		reach.push_back(c);
+	}
+}
+
+
+bool Cave::shootArrow()
+{
+	while (true) {
+		std::cout << "Enter a target room to shoot the arrow at.\n"
+			<< "The room must be at most 3 rooms away.\n";
+		int target;
+		std::cin >> target;
+		if (!std::cin) {
+			std::cout << "Not an available option.\n";
+			std::cin.clear();
+			std::cin.ignore(99999, '\n');
+			continue;
+		}
+
+		std::vector<int> reachable;
+		getAdj(reachable, currentRoom);
+		int currentSize = reachable.size();
+		for (int i = 0; i < currentSize; ++i) {
+			getAdj(reachable, reachable[i]);
+		}
+		currentSize = reachable.size();
+		for (int i = 0; i < currentSize; ++i) {
+			getAdj(reachable, reachable[i]);
+		}
+
+		if (std::count(reachable.begin(), reachable.end(), target) == 0) {
+			std::cout << "Target is too far.\n";
+			continue;
+		}
+		std::cout << "\n";
+		if (target == wumpus) {
+			return true;
+		}
+
+		auto idPtr = &(caveRooms[wumpus].connIds);
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::vector<double> prob(caveRooms.size(), 0.0);
+		for (auto i : *idPtr) {
+			prob[i] = 1.0;
+		}
+		std::discrete_distribution<int> dist(prob.begin(), prob.end());
+		setWumpus(dist(gen));
+		std::cout << "The arrow missed and the Wumpus has awoken.\n"
+			<< "The Wumpus will move to an adjacent room.\n\n";
+		arrows--;
+		break;
+	}
+	return false;
+}
 
 
 int Cave::size() const
@@ -192,13 +251,13 @@ void Cave::gotoRoom(int room)
 }
 
 
-void Cave::gotoAdjacentRoom(int room)
+void Cave::gotoAdjacentRoom()
 {
 	while (true) {
 		std::cout << "Enter an adjacent room # to move there.\n";
 		int newLocation;
 		std::cin >> newLocation;
-		auto idPtr = &(caveRooms[room].connIds);
+		auto idPtr = &(caveRooms[currentRoom].connIds);
 		if (!std::cin) {
 			std::cout << "Not an available option.\n";
 			std::cin.clear();
@@ -230,15 +289,17 @@ void Cave::connect(int r1, int r2)
 }
 
 
-void Cave::printAdjacent(bool shortdesc) const
+void Cave::printAdjacent() const
 {
 	auto idVec = &caveRooms[currentRoom].connIds;
 	for (int i = 0; i < idVec->size(); ++i) {
-		if (i == idVec->size() - 1) {
-			std::cout << ", and ";
-		}
-		else if (i > 0) {
-			std::cout << ", ";
+		if (i != 0) {
+			if (i == idVec->size() - 1) {
+				std::cout << ", and ";
+			}
+			else if (i > 0) {
+				std::cout << ", ";
+			}
 		}
 		std::cout << (*idVec)[i];
 	}
@@ -257,65 +318,6 @@ void Cave::printAdjacent(bool shortdesc) const
 		}
 	}
 	std::cout << "\n\n";
-}
-
-
-void Cave::printShortDesc(int room) const
-{
-	std::cout << "(" << caveRooms[room].shortDesc << ")";
-}
-
-
-void Cave::printLongDesc(int room) const
-{
-	std::cout << "(" << caveRooms[room].longDesc << ")";
-}
-
-
-void Cave::saveRooms(std::ofstream& fout) const
-{
-	fout << currentRoom << "\n";
-	for (auto r : caveRooms) {
-		fout << r.nodeId << "\n";
-		fout << r.numConnected << "\n";
-		fout << r.shortDesc << "\n";
-		fout << r.longDesc << "\n";
-		for (auto c : r.connIds) {
-			fout << c << " ";
-		}
-		fout << "\n";
-	}
-}
-
-
-void Cave::readRooms(std::ifstream& fin)
-{
-	caveRooms.clear();
-	fin >> currentRoom;
-	while (true) {
-		int newId;
-		fin >> newId;
-		if (!fin) {
-			if (fin.eof()) {
-				break;
-			}
-			else {
-				std::cout << "Could not read line\n";
-				break;
-			}
-		}
-		CaveNode newNode(newId);
-		fin >> newNode.numConnected;
-		fin.ignore(99999, '\n');
-		std::getline(fin, newNode.shortDesc);
-		std::getline(fin, newNode.longDesc);
-		for (int i = 0; i < newNode.numConnected; ++i) {
-			int connId;
-			fin >> connId;
-			(newNode.connIds).push_back(connId);
-		}
-		caveRooms.push_back(newNode);
-	}
 }
 
 
