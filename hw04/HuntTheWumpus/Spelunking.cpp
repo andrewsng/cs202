@@ -31,7 +31,16 @@ int main()
 		return 0;
 	}*/
 	while (true) {
+		int status = newCave.updateGame();
 		int location = newCave.getCurrentRoom();
+		if (status == 0) {
+			cout << "The Wumpus killed you!\nGAME OVER...\n";
+			break;
+		}
+		if (status == 1) {
+			cout << "You fell into the bottomless pit!\nGAME OVER...\n";
+			break;
+		}
 		cout << "You are in room " << location << ".\n";
 		std::cout << "There are tunnels to rooms ";
 		newCave.printAdjacent(1);

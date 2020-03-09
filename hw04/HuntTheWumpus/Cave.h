@@ -32,6 +32,8 @@ public:
 
 	void setBat(const int& bRoom);
 
+	int updateGame();
+
 	int size() const;
 
 	int getCurrentRoom() const;

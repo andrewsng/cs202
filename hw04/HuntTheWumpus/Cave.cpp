@@ -59,7 +59,8 @@ Cave::Cave(int size)
 }
 
 
-void Cave::genCave() {
+void Cave::genCave()
+{
 	int size = caveRooms.size();
 
 	std::random_device rd;
@@ -116,18 +117,59 @@ void Cave::genCave() {
 }
 
 
-void Cave::setWumpus(const int& wRoom) {
+void Cave::setWumpus(const int& wRoom)
+{
 	wumpus = wRoom;
 }
 
 
-void Cave::setPit(const int& pRoom) {
+void Cave::setPit(const int& pRoom)
+{
 	pit = pRoom;
 }
 
 
-void Cave::setBat(const int& bRoom) {
+void Cave::setBat(const int& bRoom)
+{
 	bat = bRoom;
+}
+
+
+int Cave::updateGame()
+{
+	int size = caveRooms.size();
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::vector<double> prob(size, 1.0);
+
+	if (currentRoom == wumpus) {
+		return 0;
+	}
+
+	if (currentRoom == pit) {
+		return 1;
+	}
+
+	if (currentRoom == bat) {
+		prob[currentRoom] == 0.0;
+		std::discrete_distribution<int> dist(prob.begin(), prob.end());
+		gotoRoom(dist(gen));
+		prob[wumpus] = 0.0;
+		prob[pit] = 0.0;
+		dist = std::discrete_distribution<int>(prob.begin(), prob.end());
+		setBat(dist(gen));
+		if (updateGame() == 0) {
+			std::cout << "The giant bat moves you to the Wumpus' room.\n";
+			return 0;
+		}
+		if (updateGame() == 1) {
+			std::cout << "The giant bat moves you over the bottomless pit.\n";
+			return 1;
+		}
+		std::cout << "The giant bat moves you to another room.\n";
+		return 2;
+	}
 }
 
 
@@ -166,14 +208,6 @@ void Cave::gotoAdjacentRoom(int room)
 		if (!std::count(idPtr->begin(), idPtr->end(), newLocation)) {
 			std::cout << "Not an available option.\n";
 			continue;
-		}
-		std::cout << "Moving to new room: \n";
-		std::cout << newLocation << " ";
-		if (caveRooms[newLocation].visited) {
-			printShortDesc(newLocation);
-		}
-		else {
-			printLongDesc(newLocation);
 		}
 		std::cout << "\n\n";
 		gotoRoom(newLocation);
