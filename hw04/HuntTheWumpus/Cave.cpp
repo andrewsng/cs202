@@ -12,16 +12,11 @@ Source code for Cave class
 #include <random>
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 
 
-Cave::CaveNode::CaveNode(int id)
+Cave::CaveNode::CaveNode(int id) : nodeId(id), numConnected(0), visited(0)
 {
-	nodeId = id;
-
-	numConnected = 0;
-
-	visited = 0;
-
 	shortDesc = "short desc.";
 	longDesc = "long description";
 }
@@ -29,12 +24,43 @@ Cave::CaveNode::CaveNode(int id)
 
 Cave::Cave(int size)
 {
-	currentRoom = 1;
+	currentRoom = 0;
 
 	for (int i = 0; i < size; ++i) {
 		Cave::CaveNode newNode(i);
 		caveRooms.push_back(newNode);
 	}
+
+	genCave();
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(1, size - 1);
+	int newWump = dist(gen);
+	int newPit;
+	int newBat;
+	setWumpus(newWump);
+	while (true) {
+		newPit = dist(gen);
+		if (newPit == newWump) {
+			continue;
+		}
+		break;
+	}
+	setPit(newPit);
+	while (true) {
+		newBat = dist(gen);
+		if (newBat == newWump || newBat == newPit) {
+			continue;
+		}
+		break;
+	}
+	setBat(newBat);
+}
+
+
+void Cave::genCave() {
+	int size = caveRooms.size();
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -43,12 +69,14 @@ Cave::Cave(int size)
 	int index = 0;
 	int fails = 0;
 	while (true) {
-		std::discrete_distribution<int> dist(prob.begin(), prob.end());
-		std::find_if(prob.begin(), prob.end(), != 0.0)
-		if (fails >= (2 * caveRooms.size())) {
+		if (std::count(prob.begin(), prob.end(), 0.0) == prob.size()) {
 			break;
 		}
-		if (index == caveRooms.size()) {
+		std::discrete_distribution<int> dist(prob.begin(), prob.end());
+		if (fails >= (2 * size)) {
+			break;
+		}
+		if (index == size) {
 			index = 0;
 		}
 		int randId = dist(gen);
@@ -75,22 +103,33 @@ Cave::Cave(int size)
 			fails = 0;
 		}
 		int fb = fails;
-		/*for (auto p : prob) {
-			std::cout << p << "\n";
-		}
-		std::cout << "\n";*/
 		for (auto p : prob) {
 			if (p != 0.0) {
 				fails++;
 				break;
 			}
 		}
-		if (fb  == fails) {
+		if (fb == fails) {
 			break;
 		}
-
 	}
 }
+
+
+void Cave::setWumpus(const int& wRoom) {
+	wumpus = wRoom;
+}
+
+
+void Cave::setPit(const int& pRoom) {
+	pit = pRoom;
+}
+
+
+void Cave::setBat(const int& bRoom) {
+	bat = bRoom;
+}
+
 
 
 int Cave::size() const
@@ -159,21 +198,31 @@ void Cave::connect(int r1, int r2)
 
 void Cave::printAdjacent(bool shortdesc) const
 {
-	if (shortdesc) {
-		for (auto c : caveRooms[currentRoom].connIds) {
-			std::cout << c << " ";
-			printShortDesc(currentRoom);
-			std::cout << "\n";
+	auto idVec = &caveRooms[currentRoom].connIds;
+	for (int i = 0; i < idVec->size(); ++i) {
+		if (i == idVec->size() - 1) {
+			std::cout << ", and ";
+		}
+		else if (i > 0) {
+			std::cout << ", ";
+		}
+		std::cout << (*idVec)[i];
+	}
+	std::cout << "\n\n";
+	std::cout << "You observe: \n";
+
+	for (auto c : *idVec) {
+		if (c == wumpus) {
+			std::cout << "\"I smell a wumpus...\"\n";
+		}
+		if (c == pit) {
+			std::cout << "\"I feel a breeze...\"\n";
+		}
+		if (c == bat) {
+			std::cout << "\"I hear a bat...\"\n";
 		}
 	}
-	else {
-		for (auto c : caveRooms[currentRoom].connIds) {
-			std::cout << c << " ";
-			printLongDesc(currentRoom);
-			std::cout << "\n";
-		}
-	}
-	std::cout << "\n";
+	std::cout << "\n\n";
 }
 
 
@@ -238,11 +287,38 @@ void Cave::readRooms(std::ifstream& fin)
 
 void Cave::printConnections() const
 {
-	for (auto r : caveRooms) {
-		std::cout << "id: " << r.nodeId << "\n";
-		std::cout << "connected to: \n";
-		for (auto c : r.connIds) {
-			std::cout << c << "\n";
+	int size = caveRooms.size();
+	for (int j = 0; j < size; ++j) {
+		if (j == 0) {
+			std::cout << "   ";
+			for (int i = 0; i < size; ++i) {
+				std::cout << std::setw(3) << i;
+			}
+			std::cout << "\n";
 		}
+		std::cout << std::setw(3) << j;
+		for (int i = 0; i < size; ++i) {
+			std::cout << std::setw(3) << this->checkConnect(j, i);
+		}
+		if (j == wumpus) {
+			std::cout << " W";
+		}
+		if (j == pit) {
+			std::cout << " P";
+		}
+		if (j == bat) {
+			std::cout << " B";
+		}
+		std::cout << "\n";
 	}
+}
+
+
+bool Cave::checkConnect(int room1, int room2) const {
+	auto ptr1 = &caveRooms[room1].connIds;
+	auto ptr2 = &caveRooms[room2];
+	if (std::count(ptr1->begin(), ptr1->end(), ptr2->nodeId) == 1) {
+		return 1;
+	}
+	return 0;
 }

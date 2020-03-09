@@ -33,8 +33,7 @@ int main()
 	while (true) {
 		int location = newCave.getCurrentRoom();
 		cout << "You are in room " << location << ".\n";
-		std::cout << "Room " << location;
-		std::cout << " is connected to:\n";
+		std::cout << "There are tunnels to rooms ";
 		newCave.printAdjacent(1);
 
 		cout << "What would you like to do?\n"
