@@ -125,8 +125,6 @@
   <ItemGroup>
     <ClCompile Include="Cave.cpp" />
     <ClCompile Include="HuntTheWumpus.cpp" />
-    <ClCompile Include="Spelunking.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cave.h" />

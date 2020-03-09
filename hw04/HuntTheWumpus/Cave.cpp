@@ -1,7 +1,7 @@
 /*
 Cave.cpp
 Andrew Ng
-Feb 5, 2020
+Mar 8, 2020
 Source code for Cave class
 */
 
@@ -152,7 +152,7 @@ int Cave::updateGame()
 	}
 
 	if (currentRoom == bat) {
-		prob[currentRoom] == 0.0;
+		prob[currentRoom] = 0.0;
 		std::discrete_distribution<int> dist(prob.begin(), prob.end());
 		gotoRoom(dist(gen));
 		prob[wumpus] = 0.0;
@@ -170,6 +170,7 @@ int Cave::updateGame()
 		std::cout << "The giant bat moves you to another room.\n\n";
 		return 2;
 	}
+	return -1;
 }
 
 
@@ -304,7 +305,6 @@ void Cave::printAdjacent() const
 		std::cout << (*idVec)[i];
 	}
 	std::cout << "\n\n";
-	std::cout << "You observe: \n";
 
 	for (auto c : *idVec) {
 		if (c == wumpus) {
@@ -317,7 +317,7 @@ void Cave::printAdjacent() const
 			std::cout << "\"I hear a bat...\"\n";
 		}
 	}
-	std::cout << "\n\n";
+	std::cout << "\n";
 }
 
 
