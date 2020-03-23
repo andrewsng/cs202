@@ -7,6 +7,7 @@ Recursive functions for hw04
 
 
 #include <iostream>
+#include <map>
 #include "Stopwatch.h"
 
 
@@ -17,6 +18,25 @@ unsigned long long fib(int n)
 	if (n == 1)
 		return 1;
 	return fib(n - 1) + fib(n - 2);
+}
+
+
+unsigned long long fib_map(int n, std::map<int, unsigned long long>& vals)
+{
+	if (vals.count(n) != 0) {
+		return vals.at(n);
+	}
+	else {
+		unsigned long long result;
+		if (n == 0)
+			result = 0;
+		else if (n == 1)
+			result = 1;
+		else 
+			result = fib_map(n - 1, vals) + fib_map(n - 2, vals);
+		vals[n] = result;
+		return result;
+	}
 }
 
 
@@ -69,14 +89,15 @@ unsigned long long ack(unsigned long long m, unsigned long long n)
 int main()
 {
 	std::cout << "--------RECURSION!--------\n\n";
-	std::cout << "fib[50] recursive\n";
+	std::cout << "fib[93] recursive\n";
+	std::map<int, unsigned long long> vals;
 	Stopwatch fibTimeR;
-	std::cout << fib(50) << "\n";
+	std::cout << fib_map(93, vals) << "\n";
 	fibTimeR.stop();
 	fibTimeR.reportSec();
 	fibTimeR.reportMilli();
 
-	std::cout << "\nfib[50] non-recursive\n";
+	/*std::cout << "\nfib[50] non-recursive\n";
 	Stopwatch fibTimeNR;
 	std::cout << fib_loop(50) << "\n";
 	fibTimeNR.stop();
@@ -102,5 +123,5 @@ int main()
 	std::cout << ack(3, 11) << "\n";
 	ackTime.stop();
 	ackTime.reportSec();
-	ackTime.reportMilli();
+	ackTime.reportMilli();*/
 }
