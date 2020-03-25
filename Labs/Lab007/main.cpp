@@ -12,6 +12,7 @@
 int main()
 {
 	Vec3 myVec;
+	std::cout << myVec << "\n";
 
 	return 0;
 }
