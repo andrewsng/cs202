@@ -1,3 +1,12 @@
+/*
+	recursion1.cpp
+	Andrew Ng
+	March 31, 2020
+	fibonacci and factorial functions
+	for Iditarod Challenge 1
+*/
+
+
 #include <iostream>
 #include <map>
 #include <iomanip>
@@ -57,12 +66,22 @@ unsigned long long factorial_loop(int n)
 
 int main()
 {
+	std::cout << "fib(93) using map to cache values: \n";
 	std::map<int, unsigned long long> fibCache;
-	std::cout << fib(93, fibCache) << "\n";
+	std::cout << fib(93, fibCache) << "\n\n";
+
+	std::cout << "Stored values in fibonacci cache: \n";
+	std::cout << " n | fib(n)\n";
 	for (auto it = fibCache.begin(); it != fibCache.end(); it++) {
-		std::cout << std::setw(2) << it->first << " " << it->second << "\n";
+		std::cout << std::setw(2) << it->first << " | " << it->second << "\n";
 	}
-	//std::cout << fib_loop(50) << "\n";
-	//std::cout << factorial(20) << "\n";
-	//std::cout << factorial_loop(20) << "\n";
+	
+	std::cout << "\nfib_loop(93): \n";
+	std::cout << fib_loop(93) << "\n\n";
+
+	std::cout << "factorial(20):\n";
+	std::cout << factorial(20) << "\n\n";
+
+	std::cout << "factorial_loop(20):\n";
+	std::cout << factorial_loop(20) << "\n";
 }
