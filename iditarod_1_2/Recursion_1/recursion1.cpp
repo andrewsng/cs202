@@ -36,9 +36,20 @@ unsigned long long factorial(int n)
 }
 
 
+unsigned long long factorial_loop(int n)
+{
+	unsigned long long result = 1;
+	for (int i = 1; i <= n; i++) {
+		result *= i;
+	}
+	return result;
+}
+
+
 int main()
 {
 	//std::cout << fib(50) << "\n";
 	//std::cout << fib_loop(50) << "\n";
-	std::cout << factorial(20) << "\n";
+	//std::cout << factorial(20) << "\n";
+	std::cout << factorial_loop(20) << "\n";
 }
