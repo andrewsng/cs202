@@ -1,12 +1,21 @@
 #include <iostream>
+#include <map>
+#include <iomanip>
 
 
-unsigned long long fib(int n)
+unsigned long long fib(int n, 
+	std::map<int, unsigned long long>& cache)
 {
+	if (cache.count(n) != 0) {
+		return cache.at(n);
+	}
 	if (n < 2) {
+		cache[n] = n;
 		return n;
 	}
-	return fib(n - 1) + fib(n - 2);
+	unsigned long long result = fib(n - 1, cache) + fib(n - 2, cache);
+	cache[n] = result;
+	return result;
 }
 
 
@@ -48,8 +57,12 @@ unsigned long long factorial_loop(int n)
 
 int main()
 {
-	//std::cout << fib(50) << "\n";
+	std::map<int, unsigned long long> fibCache;
+	std::cout << fib(93, fibCache) << "\n";
+	for (auto it = fibCache.begin(); it != fibCache.end(); it++) {
+		std::cout << std::setw(2) << it->first << " " << it->second << "\n";
+	}
 	//std::cout << fib_loop(50) << "\n";
 	//std::cout << factorial(20) << "\n";
-	std::cout << factorial_loop(20) << "\n";
+	//std::cout << factorial_loop(20) << "\n";
 }
