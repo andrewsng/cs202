@@ -9,6 +9,21 @@
 #include <iostream>
 
 
+class TestStatic
+{
+public:
+	TestStatic() {
+		std::cout << "object " << objCount_ << " constructed\n";
+		objCount_++;
+	}
+
+private:
+	static int objCount_;
+};
+
+int TestStatic::objCount_{ 0 };
+
+
 void countMe()
 {
 	static int count = 0;
@@ -24,4 +39,8 @@ int main()
 	countMe();
 	countMe();
 
+	TestStatic ts1;
+	TestStatic ts2;
+	TestStatic ts3;
+	TestStatic ts4;
 }
