@@ -17,6 +17,10 @@ public:
 		objCount_++;
 	}
 
+	static void printCount() {
+		std::cout << objCount_ << " TestStatic objects have been constructed\n";
+	}
+
 private:
 	static int objCount_;
 };
@@ -39,8 +43,13 @@ int main()
 	countMe();
 	countMe();
 
+	std::cout << "\n";
+
 	TestStatic ts1;
+	TestStatic::printCount();
 	TestStatic ts2;
+	TestStatic::printCount();
 	TestStatic ts3;
 	TestStatic ts4;
+	TestStatic::printCount();
 }
