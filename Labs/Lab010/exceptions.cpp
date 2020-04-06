@@ -1,3 +1,10 @@
+/*
+    exceptions.cpp
+    Andrew Ng
+    Apr 5, 2020
+    Lab 10 for cs202
+*/
+
 #include <iostream>
 #include <stdexcept>
 #include <string>
