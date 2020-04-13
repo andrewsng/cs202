@@ -29,6 +29,8 @@ private:
 class Derived : public Base
 {
 public:
+    using Base::Base;
+
     Derived() : word_("howdy")
     {
         std::cout << "Constructing a default derived object\n";
@@ -54,16 +56,24 @@ private:
 
 int main()
 {
+    std::cout << "---A default base class object---\n";
     { Base myBase; }
     std::cout << "\n";
 
+    std::cout << "---A base class object w/ 1 param---\n";
     { Base myBase(456); }
     std::cout << "\n";
 
+    std::cout << "---A default derived class object---\n";
     { Derived myDerived; }
     std::cout << "\n";
 
+    std::cout << "---A derived class object w/ 2 param---\n";
     { Derived myDerived(789, "hello"); }
+    std::cout << "\n";
+
+    std::cout << "---Derived object using inherited base class constructor---\n";
+    { Derived myDerived(111); }
     std::cout << "\n";
 
     return 0;
