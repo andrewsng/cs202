@@ -34,6 +34,12 @@ public:
         std::cout << "Constructing a default derived object\n";
     }
 
+    Derived(int num, std::string word)
+    : Base(num), word_(word)
+    {
+        std::cout << "Constructing a derived object with word: " << word_ << "\n";
+    };
+
     ~Derived()
     {
         std::cout << "Destructing a derived object with word: " << word_ << "\n";
@@ -55,6 +61,9 @@ int main()
     std::cout << "\n";
 
     { Derived myDerived; }
+    std::cout << "\n";
+
+    { Derived myDerived(789, "hello"); }
     std::cout << "\n";
 
     return 0;
