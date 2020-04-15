@@ -1,3 +1,11 @@
+/*
+    CityNode.cpp
+    Andrew Ng
+    Apr 14, 2020
+    source for CityNode class
+*/
+
+
 #include "CityNode.h"
 
 

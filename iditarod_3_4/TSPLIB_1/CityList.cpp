@@ -1,3 +1,11 @@
+/*
+    CityList.cpp
+    Andrew Ng
+    Apr 14, 2020
+    source for CityList class
+*/
+
+
 #include "CityList.h"
 
 
@@ -62,4 +70,17 @@ void CityList::printList() const
     for (auto n : list_) {
         std::cout << n << "\n";
     }
+}
+
+
+double CityList::distance(int first, int second) const
+{
+    if (first == second ||
+        first < 1 || 
+        second < 1 ||
+        first > list_.size() ||
+        second > list_.size()) 
+        return 0;
+    return sqrt(pow(list_[second - 1].getX() - list_[first - 1].getX(), 2) +
+                pow(list_[second - 1].getY() - list_[first - 1].getY(), 2));
 }

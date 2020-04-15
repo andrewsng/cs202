@@ -1,3 +1,11 @@
+/*
+    CityNode.h
+    Andrew Ng
+    Apr 14, 2020
+    header for CityNode class
+*/
+
+
 #ifndef CITYNODE_H
 #define CITYNODE_H
 
