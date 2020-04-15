@@ -23,7 +23,7 @@ bool checkIfstream(const std::ifstream& fin)
 }
 
 
-void CityList::read(std::string fileName)
+void CityList::read(const std::string& fileName)
 {
     std::ifstream fin(fileName);
     if (!fin) {

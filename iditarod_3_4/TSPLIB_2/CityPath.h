@@ -23,6 +23,10 @@ public:
     ~CityPath()
     {}
 
+    double distance() const;
+
+    void pushNum(int num) { path_.push_back(num); }
+
 private:
 
     std::vector<int> path_;

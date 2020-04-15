@@ -28,7 +28,9 @@ public:
     ~CityList()
     {}
 
-    void read(std::string fileName);
+    unsigned int getListSize() const { return list_.size(); }
+
+    void read(const std::string& fileName);
 
     void printList() const;
 

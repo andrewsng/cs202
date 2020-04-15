@@ -4,6 +4,8 @@
 
 #include "CityList.h"
 #include "CityPath.h"
+#include <string>
+#include <random>
 
 
 class TspSolver
@@ -15,6 +17,8 @@ public:
 
     ~TspSolver()
     {}
+
+    void SolveRandomly(const std::string& fileName);
 
 private:
 
