@@ -4,6 +4,7 @@
 
 #include "CityList.h"
 #include "CityPath.h"
+#include <iostream>
 #include <string>
 #include <random>
 

@@ -28,7 +28,11 @@ public:
     ~CityList()
     {}
 
+    std::vector<CityNode> getList() const { return list_; }
+
     unsigned int getListSize() const { return list_.size(); }
+
+    void push_back(const CityNode& node) { list_.push_back(node); }
 
     void read(const std::string& fileName);
 
