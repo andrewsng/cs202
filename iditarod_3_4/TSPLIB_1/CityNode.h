@@ -15,6 +15,8 @@ public:
           longitude_(longitude), x_(x), y_(y)
     {}
 
+    ~CityNode()
+    {}
 
 private:
 
@@ -23,6 +25,7 @@ private:
     double longitude_{ -1.0 };
     double x_{ -1.0 };
     double y_{ -1.0 };
+    
 };
 
 #endif
