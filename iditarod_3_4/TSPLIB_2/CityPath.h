@@ -17,6 +17,12 @@ class CityPath
 {
 public:
 
+    CityPath()
+    {}
+
+    ~CityPath()
+    {}
+
 private:
 
     std::vector<int> path_;
