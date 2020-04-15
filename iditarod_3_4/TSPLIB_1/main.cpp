@@ -7,11 +7,12 @@
 
 
 #include <iostream>
-#include "CityNode.h"
 #include "CityList.h"
 
 
 int main()
 {
-
+    CityList myList;
+    myList.read("usa13509.tsp");
+    myList.printList();
 }

@@ -2,6 +2,7 @@
 #define CITYLIST_H
 
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -18,10 +19,14 @@ public:
     ~CityList()
     {}
 
+    void read(std::string fileName);
+
+    void printList() const;
+
 private:
 
     std::vector<CityNode> list_;
-    
+
 };
 
 #endif

@@ -2,6 +2,9 @@
 #define CITYNODE_H
 
 
+#include <iostream>
+
+
 class CityNode
 {
 public:
@@ -18,6 +21,16 @@ public:
     ~CityNode()
     {}
 
+    unsigned int getNum() const { return number_; }
+
+    double getLat() const { return latitude_; }
+
+    double getLong() const { return longitude_; }
+
+    double getX() const { return x_; }
+
+    double getY() const { return y_; }
+
 private:
 
     unsigned int number_{ 0 };
@@ -25,7 +38,9 @@ private:
     double longitude_{ -1.0 };
     double x_{ -1.0 };
     double y_{ -1.0 };
-    
+
 };
+
+std::ostream& operator<<(std::ostream& os, const CityNode& rhs);
 
 #endif
