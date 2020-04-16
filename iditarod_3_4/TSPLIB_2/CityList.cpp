@@ -13,7 +13,6 @@ bool checkIfstream(const std::ifstream& fin)
 {
     if (!fin) {
         if (fin.eof()) {
-            std::cout << "ERROR: end of file\n";
             return 0;
         }
         std::cout << "ERROR: file could not be read\n";

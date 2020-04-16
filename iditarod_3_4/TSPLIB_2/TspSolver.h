@@ -19,7 +19,9 @@ public:
     ~TspSolver()
     {}
 
-    void SolveRandomly(const std::string& fileName);
+    void SolveRandomly(const std::string& fileName, unsigned int limit);
+
+    void SolveGreedy(const std::string& fileName);
 
 private:
 
