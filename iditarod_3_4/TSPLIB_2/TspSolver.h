@@ -1,3 +1,11 @@
+/*
+	TspSolver.h
+	Andrew Ng
+	Apr 14, 2020
+	header for TspSolver class
+*/
+
+
 #ifndef TSPSOLVER_H
 #define TSPSOLVER_H
 
@@ -22,6 +30,8 @@ public:
     void SolveRandomly(const std::string& fileName, unsigned int limit);
 
     void SolveGreedy(const std::string& fileName);
+
+	void SolveMyWay(const std::string& fileName);
 
 private:
 

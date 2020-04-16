@@ -15,7 +15,7 @@ bool checkIfstream(const std::ifstream& fin)
         if (fin.eof()) {
             return 0;
         }
-        std::cout << "ERROR: file could not be read\n";
+        //std::cout << "ERROR: file could not be read\n";
         return 0;
     }
     return 1;

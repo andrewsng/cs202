@@ -30,6 +30,8 @@ public:
 
     std::vector<CityNode> getList() const { return list_; }
 
+	void setList(const std::vector<CityNode>& list) { list_ = list; }
+
     unsigned int getListSize() const { return list_.size(); }
 
     void push_back(const CityNode& node) { list_.push_back(node); }

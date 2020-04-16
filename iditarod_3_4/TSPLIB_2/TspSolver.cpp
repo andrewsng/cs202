@@ -1,3 +1,11 @@
+/*
+	TspSolver.cpp
+	Andrew Ng
+	Apr 14, 2020
+	source for TspSolver class
+*/
+
+
 #include "TspSolver.h"
 
 
@@ -47,9 +55,7 @@ void TspSolver::SolveRandomly(const std::string& fileName, unsigned int limit)
             bestDist = newDist;
             std::vector<int> newPath;
             for (auto c : chosen.getList()) {
-                unsigned int id = c.getNum();
-                //std::cout << id << "\n";
-                newPath.push_back(id);
+                newPath.push_back(c.getNum());
             }
             route_.setPath(newPath);
         }
@@ -100,9 +106,9 @@ void TspSolver::SolveGreedy(const std::string& fileName)
 
     chosen.push_back(cities[start - 1]);
 
-    double newDist = 0;
+    double finalDist = 0;
     for (int i = 1; i < chosen.getListSize() - 1; i++) {
-        newDist += chosen.distance(i, i + 1);
+        finalDist += chosen.distance(i, i + 1);
     }
 
     std::vector<int> newPath;
@@ -111,5 +117,76 @@ void TspSolver::SolveGreedy(const std::string& fileName)
     }
     route_.setPath(newPath);
 
-    std::cout << "Distance: " << newDist << "\n";
+    std::cout << "Distance: " << finalDist << "\n";
+}
+
+
+void TspSolver::SolveMyWay(const std::string& fileName)
+{
+	cities_.read(fileName);
+	std::vector<CityNode> cities = cities_.getList();
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> distr(1, cities_.getListSize());
+
+	CityList chosen;
+	int start = distr(gen);
+	chosen.push_back(cities[start - 1]);
+	chosen.push_back(cities[start - 1]);
+	std::vector<int> unchosen;
+	for (int i = 1; i <= cities.size(); i++) {
+		if (i != start)
+			unchosen.push_back(i);
+	}
+
+	while (!unchosen.empty()) {
+		double closest = 1.0e+12;
+		unsigned int closestId = 0;
+		auto removeIter = unchosen.end();
+
+		//unsigned int id = chosen.getList().back().getNum();
+		for (auto it = unchosen.begin(); it < unchosen.end(); it++) {
+			for (auto c : chosen.getList()) {
+				unsigned int id = c.getNum();
+				double newDist = cities_.distance(id, *it);
+				if (closest > newDist) {
+					closest = newDist;
+					closestId = *it;
+					removeIter = it;
+				}
+			}
+		}
+
+		double minDist = 1.0e+12;
+		std::vector<CityNode> chosenVec = chosen.getList();
+		auto insertIter = chosenVec.end();
+		for (auto it = chosenVec.begin(); it < chosenVec.end() - 1; it++) {
+			double newDist = 0;
+			newDist += cities_.distance(it->getNum(), closestId);
+			newDist += cities_.distance((it + 1)->getNum(), closestId);
+			newDist -= cities_.distance(it->getNum(), (it + 1)->getNum());
+			if (minDist > newDist) {
+				minDist = newDist;
+				insertIter = it + 1;
+			}
+		}
+
+		chosenVec.insert(insertIter, cities[closestId - 1]);
+		chosen.setList(chosenVec);
+		unchosen.erase(removeIter);
+	}
+
+	double finalDist = 0;
+	for (int i = 1; i < chosen.getListSize() - 1; i++) {
+		finalDist += chosen.distance(i, i + 1);
+	}
+
+	std::vector<int> newPath;
+	for (auto c : chosen.getList()) {
+		newPath.push_back(c.getNum());
+	}
+	route_.setPath(newPath);
+
+	std::cout << "Distance: " << finalDist << "\n";
 }

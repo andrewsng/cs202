@@ -126,12 +126,14 @@
     <ClCompile Include="CityList.cpp" />
     <ClCompile Include="CityNode.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Stopwatch.cpp" />
     <ClCompile Include="TspSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CityList.h" />
     <ClInclude Include="CityNode.h" />
     <ClInclude Include="CityPath.h" />
+    <ClInclude Include="Stopwatch.h" />
     <ClInclude Include="TspSolver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
