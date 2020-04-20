@@ -35,5 +35,4 @@ std::ostream& operator<<(std::ostream& os, const Wrapper<U>& obj)
 }
 
 
-
 #endif
