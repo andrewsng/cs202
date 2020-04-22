@@ -1,19 +1,20 @@
 /*
     main.cpp
     Andrew Ng
-    Apr 21, 2020
-    main for SVG Output part 1
+    Apr 14, 2020
+    main for TSPLIB part 2
 */
 
 
 #include <iostream>
+#include "CityList.h"
 #include "TspSolver.h"
+#include "Stopwatch.h"
 
 
 int main()
 {
-	// RANDOMLY SOLVED TOURS
-    TspSolver random1;
+    /*TspSolver random1;
     random1.SolveRandomly("dsj1000.tsp", 1);
 	random1.outputSVG("dsj1000Rand.svg", 1000, 1000);
 
@@ -33,8 +34,6 @@ int main()
 	random5.SolveRandomly("usa13509.tsp", 1);
 	random5.outputSVG("usa13509Rand.svg", 1700, 1000);
 
-
-	// GREEDY SOLVED TOURS
 	TspSolver greedy1;
 	greedy1.SolveGreedy("dsj1000.tsp");
 	greedy1.outputSVG("dsj1000Greedy.svg", 1000, 1000);
@@ -53,10 +52,8 @@ int main()
 
 	TspSolver greedy5;
 	greedy5.SolveGreedy("usa13509.tsp");
-	greedy5.outputSVG("usa13509Greedy.svg", 1700, 1000);
+	greedy5.outputSVG("usa13509Greedy.svg", 1700, 1000);*/
 
-
-	// CUSTOM SOLVED TOURS
 	TspSolver custom1;
 	custom1.SolveMyWay("dsj1000.tsp");
 	custom1.outputSVG("dsj1000Custom.svg", 1000, 1000);
