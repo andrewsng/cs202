@@ -40,22 +40,24 @@ void TspSolver::SolveRandomly(const std::string& fileName, unsigned int limit)
                 if (pick == *it) {
                     chosen.push_back(cities[*it - 1]);
                     unchosen.erase(it);
+
+					if (svgCounter % 278 == 0) {
+						std::vector<int> newPath;
+						for (auto c : chosen.getList()) {
+							newPath.push_back(c.getNum());
+						}
+						route_.setPath(newPath);
+						std::string fileName = "fnl4461Random_f"
+							+ std::to_string(svgCounter / 278) + ".svg";
+						std::cout << svgCounter << "\n";
+						std::cout << fileName << "\n";
+						outputSVG(fileName, 1000, 1000);
+					}
+					svgCounter++;
+
                     break;
                 }
             }
-
-			if (svgCounter % 278 == 0) {
-				std::vector<int> newPath;
-				for (auto c : chosen.getList()) {
-					newPath.push_back(c.getNum());
-				}
-				route_.setPath(newPath);
-				std::string fileName = "fnl4461Random_f"
-					+ std::to_string(svgCounter / 278) + ".svg";
-				outputSVG(fileName, 1000, 1000);
-			}
-
-			svgCounter++;
         }
 
         chosen.push_back(cities[start - 1]);
@@ -124,7 +126,7 @@ void TspSolver::SolveGreedy(const std::string& fileName)
 				newPath.push_back(c.getNum());
 			}
 			route_.setPath(newPath);
-			std::string fileName = "fnl4461Random_f"
+			std::string fileName = "fnl4461Greedy_f"
 				+ std::to_string(svgCounter / 278) + ".svg";
 			outputSVG(fileName, 1000, 1000);
 		}
@@ -211,7 +213,7 @@ void TspSolver::SolveMyWay(const std::string& fileName)
 				newPath.push_back(c.getNum());
 			}
 			route_.setPath(newPath);
-			std::string fileName = "fnl4461Random_f"
+			std::string fileName = "fnl4461Custom_f"
 				+ std::to_string(svgCounter / 278) + ".svg";
 			outputSVG(fileName, 1000, 1000);
 		}
@@ -259,8 +261,6 @@ void TspSolver::outputSVG(const std::string& fileName,
 		ymin = std::min(ymin, cities[i].getY());
 		ymax = std::max(ymax, cities[i].getY());
 	}
-	std::cout << xmin << " " << xmax << "\n";
-	std::cout << ymin << " " << ymax << "\n";
 
 	double dx = xmax - xmin;
 	double dy = ymax - ymin;
