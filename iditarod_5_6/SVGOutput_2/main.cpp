@@ -14,15 +14,15 @@
 
 int main()
 {
-	TspSolver random;
+	/*TspSolver random;
 	random.SolveRandomly("fnl4461.tsp", 1);
-	//random3.outputSVG("fnl4451Rand.svg", 1000, 1000);
+	//random3.outputSVG("fnl4451Rand.svg", 1000, 1000);*/
 
-	/*TspSolver greedy;
+	TspSolver greedy;
 	greedy.SolveGreedy("fnl4461.tsp");
 	//greedy3.outputSVG("fnl4451Greedy.svg", 1000, 1000);
 
-	TspSolver custom;
+	/*TspSolver custom;
 	custom.SolveMyWay("fnl4461.tsp");
 	//custom3.outputSVG("fnl4451Custom.svg", 1000, 1000);*/
 }
