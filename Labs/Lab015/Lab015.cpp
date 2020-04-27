@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     for (auto d : dest) {
         std::cout << d << " ";
     }
-    std::cout << std::endl;
+    std::cout << "\n\n";
 
 
     std::vector<int> orig2 = { 1, 2, 4, 7, 11, 16, 22, 29, 37, 46 };
