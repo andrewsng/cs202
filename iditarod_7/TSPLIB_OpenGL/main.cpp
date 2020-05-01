@@ -1,3 +1,11 @@
+/*
+	main.cpp
+	Andrew Ng
+	Apr 30, 2020
+	main for OpenGL TSPLIB display
+*/
+
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "TspSolver.h"
@@ -31,7 +39,7 @@ const char* lnFragShaderSource =
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"    FragColor = vec4(0.5f, 0.75f, 0.75f, 1.0f);\n"
+"    FragColor = vec4(1.0f, 0.0f, 0.4f, 1.0f);\n"
 "}\0";
 
 
@@ -61,14 +69,14 @@ int main()
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glPointSize(3.0f);
+	glPointSize(2.0f);
 
 	glViewport(0, 0, 1920, 1080);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	TspSolver greedy;
-	greedy.SolveGreedy("usa13509.tsp");
+	greedy.randomInit("dsj1000.tsp");
 
 	std::vector<float> pointData;
 	std::vector<float> lineData;
@@ -93,9 +101,12 @@ int main()
 
 	glBindVertexArray(lnVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, lnVBO);
-	glBufferData(GL_ARRAY_BUFFER, lineData.size() * sizeof(float), &lineData.front(), GL_STREAM_DRAW);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
 
 	unsigned int vtxShader;
 	vtxShader = glCreateShader(GL_VERTEX_SHADER);
@@ -124,7 +135,13 @@ int main()
 	glAttachShader(lnProgram, lnFragShader);
 	glLinkProgram(lnProgram);
 
+
 	while (!glfwWindowShouldClose(window)) {
+		lineData.clear();
+		greedy.outputLines(1530, 900, 1920, 1080, lineData);
+		greedy.randomStep();
+
+
 		float modelPt[16] = {
 		1,   0,   0,   0,
 		0,   1,   0,   0,
@@ -179,19 +196,24 @@ int main()
 		glBindVertexArray(ptVAO);
 		glDrawArrays(GL_POINTS, 0, pointData.size() / 2);
 
-		glUseProgram(lnProgram);
-		modelLoc = glGetUniformLocation(lnProgram, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, modelLn);
-		viewLoc = glGetUniformLocation(lnProgram, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view);
-		projectionLoc = glGetUniformLocation(lnProgram, "projection");
-		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection);
-		glBindVertexArray(lnVAO);
-		glDrawArrays(GL_LINES, 0, lineData.size() / 2 + 1);
+		if (lineData.size() != 0) {
+			glUseProgram(lnProgram);
+			modelLoc = glGetUniformLocation(lnProgram, "model");
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, modelLn);
+			viewLoc = glGetUniformLocation(lnProgram, "view");
+			glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view);
+			projectionLoc = glGetUniformLocation(lnProgram, "projection");
+			glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, projection);
+			glBindVertexArray(lnVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, lnVBO);
+			glBufferData(GL_ARRAY_BUFFER, lineData.size() * sizeof(float), &lineData.front(), GL_STREAM_DRAW);
+			glDrawArrays(GL_LINES, 0, lineData.size() / 2 + 1);
+		}
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
 
