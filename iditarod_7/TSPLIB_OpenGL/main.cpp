@@ -104,7 +104,7 @@ int main()
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	alg algToRun = alg::random;
+	alg algToRun = alg::custom;
 	std::string fileName = "dsj1000.tsp";
 
 	bool running = true;
@@ -123,7 +123,7 @@ int main()
 			solver.customInit(fileName);
 			break;
 		default:
-			solver.randomInit(fileName);
+			solver.customInit(fileName);
 			break;
 		}
 
@@ -218,7 +218,7 @@ int main()
 				solver.customStep();
 				break;
 			default:
-				solver.randomStep();
+				solver.customStep();
 				break;
 			}
 
