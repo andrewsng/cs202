@@ -293,3 +293,71 @@ void TspSolver::outputSVG(const std::string& fileName,
 
 	fout << "</svg>";
 }
+
+
+void TspSolver::outputPoints(unsigned int width, unsigned int height,
+	unsigned int windowX, unsigned int windowY, std::vector<float>& points)
+{
+	std::vector<CityNode> cities = cities_.getList();
+	std::vector<int> route = route_.getPath();
+	double xmin = cities[0].getX();
+	double xmax = cities[0].getX();
+	double ymin = cities[0].getY();
+	double ymax = cities[0].getY();
+	for (int i = 0; i < cities.size(); i++) {
+		xmin = std::min(xmin, cities[i].getX());
+		xmax = std::max(xmax, cities[i].getX());
+		ymin = std::min(ymin, cities[i].getY());
+		ymax = std::max(ymax, cities[i].getY());
+	}
+
+	double dx = xmax - xmin;
+	double dy = ymax - ymin;
+	double padX = (windowX - width) / 2;
+	double padY = (windowY - height) / 2;
+
+	for (size_t i = 0; i < cities.size(); i++) {
+		int cx = width * (1 - (cities[i].getX() - xmin) / dx);
+		int cy = height * ((cities[i].getY() - ymin) / dy);
+
+		points.push_back(cx + padX);
+		points.push_back(cy + padY);
+	}
+}
+
+
+void TspSolver::outputLines(unsigned int width, unsigned int height,
+	unsigned int windowX, unsigned int windowY, std::vector<float>& lines)
+{
+	std::vector<CityNode> cities = cities_.getList();
+	std::vector<int> route = route_.getPath();
+	double xmin = cities[0].getX();
+	double xmax = cities[0].getX();
+	double ymin = cities[0].getY();
+	double ymax = cities[0].getY();
+	for (int i = 0; i < cities.size(); i++) {
+		xmin = std::min(xmin, cities[i].getX());
+		xmax = std::max(xmax, cities[i].getX());
+		ymin = std::min(ymin, cities[i].getY());
+		ymax = std::max(ymax, cities[i].getY());
+	}
+
+	double dx = xmax - xmin;
+	double dy = ymax - ymin;
+	double padX = (windowX - width) / 2;
+	double padY = (windowY - height) / 2;
+
+	for (size_t i = 0; i < route.size() - 1; i++) {
+		int id1 = route[i] - 1;
+		int id2 = route[i + 1] - 1;
+		int x1 = width * (1 - (cities[id1].getX() - xmin) / dx);
+		int y1 = height * ((cities[id1].getY() - ymin) / dy);
+		int x2 = width * (1 - (cities[id2].getX() - xmin) / dx);
+		int y2 = height * ((cities[id2].getY() - ymin) / dy);
+
+		lines.push_back(x1 + padX);
+		lines.push_back(y1 + padY);
+		lines.push_back(x2 + padX);
+		lines.push_back(y2 + padY);
+	}
+}

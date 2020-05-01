@@ -37,6 +37,12 @@ public:
 	void outputSVG(const std::string& fileName,
 		unsigned int width, unsigned int height);
 
+	void outputPoints(unsigned int width, unsigned int height,
+		unsigned int windowX, unsigned int windowY, std::vector<float>& points);
+
+	void outputLines(unsigned int width, unsigned int height,
+		unsigned int windowX, unsigned int windowY, std::vector<float>& lines);
+
 private:
 
     CityList cities_;
